@@ -1,0 +1,8 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2, 2), int64]) {
+  if (1) {
+    reshape(%x, newshape=[1, 4])
+  } else {
+    reshape(%x, newshape=[4, 1])
+  }
+}

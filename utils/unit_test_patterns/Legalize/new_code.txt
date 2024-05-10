@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 64, 56, 56), float32] /* ty=Tensor[(1, 64, 56, 56), float32] span=from_string:3:9 */, %y: Tensor[(1, 64, 56, 20), float32] /* ty=Tensor[(1, 64, 56, 20), float32] span=from_string:3:13 */, %z: Tensor[(1, 64, 56, 10), float32] /* ty=Tensor[(1, 64, 56, 10), float32] span=from_string:3:17 */) -> Tensor[(1, 64, 56, 86), float32] {
+  %0 = (%x, %y, %z) /* ty=(Tensor[(1, 64, 56, 56), float32], Tensor[(1, 64, 56, 20), float32], Tensor[(1, 64, 56, 10), float32]) span=from_string:4:15 */;
+  concatenate(%0, axis=3) /* ty=Tensor[(1, 64, 56, 86), float32] span=from_string:3:3 */
+}

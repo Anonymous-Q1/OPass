@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(16, 16), float32]) {
+  %0 = nn.softmax(%x);
+  cast(%0, dtype="float16")
+}

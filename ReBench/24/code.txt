@@ -1,0 +1,57 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(10, 10), float32], %x1: Tensor[(65, 10), float32], %x2: Tensor[(10, 10), float32], %x3: Tensor[(10,), float32], %x4: Tensor[(10,), float32], %x5: Tensor[(12, 10), float32], %x6: Tensor[(12,), float32], %x7: Tensor[(1,), float32], %x8: Tensor[(24, 10), float32], %x9: Tensor[(24,), float32], %x10: Tensor[(1,), float32], %x11: Tensor[(14, 30), float32], %x12: Tensor[(42, 24), float32], %x13: Tensor[(10, 24), float32], %x14: Tensor[(10,), float32], %x15: Tensor[(10,), float32], %x16: Tensor[(1,), float32], %x17: Tensor[(1,), float32]) {
+    %0 = zeros_like(%x0);
+    %1 = add(%x0, %0);
+    %2 = nn.dense(%x1, %1, units=None, out_dtype="");
+    %3 = add(%2, %x3);
+    %4 = nn.dense(%x1, %x2, units=None, out_dtype="");
+    %5 = add(%4, %x4);
+    %6 = (%3, %5);
+    %7 = nn.relu(%1);
+    %8 = add(%7, 1.0f);
+    %9 = nn.relu(%1);
+    %10 = add(%9, 1.0f);
+    %11 = add(%8, %10);
+    %12 = nn.dense(%11, %x5, units=None, out_dtype="");
+    %13 = add(%12, %x6);
+    %14 = multiply(%13, %x7);
+    %15 = reshape(%14, newshape=[1, 1, 120], allowzero=0);
+    %16 = nn.dense(%11, %x8, units=None, out_dtype="");
+    %17 = add(%16, %x9);
+    %18 = multiply(%17, %x10);
+    %19 = reshape(%18, newshape=[1, 1, 240], allowzero=0);
+    %20 = (%15, %19);
+    %21 = multiply(%18, %18);
+    let %x18 = %21;
+    %22 = zeros_like(%18);
+    %23 = ones_like(%x18);
+    let %x19 = %23;
+    %24 = multiply(%x19, %18);
+    %25 = collapse_sum_like(%24, %18);
+    %26 = add(%22, %25);
+    %27 = multiply(%x19, %18);
+    %28 = collapse_sum_like(%27, %18);
+    %29 = add(%26, %28);
+    %30 = (%29,);
+    %31 = (%x18, %30);
+    %32 = ones(shape=[1], dtype="float32");
+    %33 = add(%x10, %32);
+    %34 = split(%x11, indices_or_sections=3, axis=1);
+    %35 = %34.0;
+    %36 = ones_like(%4);
+    %37 = add(%4, %36);
+    %38 = nn.dense(%35, %37, units=None, out_dtype="");
+    %39 = cast(%37, dtype="bfloat16");
+    %40 = clip(%39, a_min=-0.2f, a_max=0.4f);
+    %41 = nn.dense(%x12, %24, units=None, out_dtype="");
+    %42 = add(%41, %x14);
+    %43 = multiply(%42, %x16);
+    %44 = reshape(%43, newshape=[1, 1, -1], allowzero=0);
+    %45 = nn.dense(%x12, %x13, units=None, out_dtype="");
+    %46 = add(%45, %x15);
+    %47 = multiply(%46, %x17);
+    %48 = reshape(%47, newshape=[1, 1, -1], allowzero=0);
+    %49 = (%44, %48);
+    %50 = (%6, %20, %31, %33, %38, %40, %49);
+    %50
+}

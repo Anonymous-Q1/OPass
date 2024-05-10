@@ -1,0 +1,71 @@
+#[version = "0.0.5"]
+def @main() {
+  %0 = qnn.conv2d(meta[relay.Constant][0], meta[relay.Constant][1], 0, 0, 1f, 1f, padding=[0, 0, 0, 0], channels=1, kernel_size=[2, 2], out_dtype="int32");
+  qnn.mul(%0, meta[relay.Constant][2], 1f, 0, 1f, 0, 1f, 0)
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3, 6, 7]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "1", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "2", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAABAAAAAEIAQABAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAQAAAAAAAAAAQEBAQ==", 
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAABAAAAAEIAQABAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAACAAAAAAAAAAQAAAAAAAAAAQEBAQ==", 
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAQAAAAAgAQABAAAAAAAAAAQAAAAAAAAACgAAAA=="
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

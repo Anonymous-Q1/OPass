@@ -1,0 +1,1 @@
+[('CombineParallelDense', {'min_num_branches': 4, 'to_batch': True})]

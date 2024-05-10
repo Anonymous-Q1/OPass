@@ -1,0 +1,12 @@
+**/__pycache__
+out
+corpus
+backup
+data
+*.tar
+*.tar.so
+*.so
+eval/transformer/*
+eval/resnet/*
+eval/NAS/*
+utils/test/*

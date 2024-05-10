@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 32, 56, 56, 4), float32]) {
+  %0 = layout_transform(%x, src_layout="NCHW4c", dst_layout="NCHW8c");
+  %1 = layout_transform(%0, src_layout="NCHW8c", dst_layout="NCHW4c");
+  nn.relu(%1)
+}

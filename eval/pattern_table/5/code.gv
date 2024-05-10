@@ -1,0 +1,41 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	opr0 [label="{{}|func\n|{<o0>Tensor[(1, 5, 5, 4), float32]|<o1>Tensor[(3, 3, 4, 1), float32]|<o2>Tensor[(1, 5, 5, 4), float32]}}"]
+	opr1 [label="{{<i0>Tensor[(1, 5, 5, 4), float32]|<i1>Tensor[(3, 3, 4, 1), float32]}|nn.conv2d\nstrides=[1, 1]\npadding=[2, 2, 2, 2]\ndilation=[2, 2]\ngroups=4\nchannels=4\nkernel_size=[3, 3]\ndata_layout=\"NHWC\"\nkernel_layout=\"HWOI\"\nout_layout=\"\"\nout_dtype=\"\"|{<o0>Tensor[(1, 5, 5, 4), float32]}}"]
+	opr0:o0 -> opr1:i0
+	opr0:o1 -> opr1:i1
+	opr2 [label="{{<i0>Tensor[(1, 5, 5, 4), float32]|<i1>Tensor[(1, 5, 5, 4), float32]}|add\n|{<o0>Tensor[(1, 5, 5, 4), float32]}}"]
+	opr1:o0 -> opr2:i0
+	opr0:o2 -> opr2:i1
+	opr3 [label="{{<i0>Tensor[(1, 5, 5, 4), float32]|<i1>Tensor[(3, 3, 4, 1), float32]|<i2>Tensor[(1, 5, 5, 4), float32]|<i3>Tensor[(1, 5, 5, 4), float32]}|def\n|{<o0>(Tensor[(1, 5, 5, 4), float32], Tensor[(3, 3, 4, 1), float32], Tensor[(1, 5, 5, 4), float32]) -\> Tensor[(1, 5, 5, 4), float32]}}"]
+	opr0:o0 -> opr3:i0
+	opr0:o1 -> opr3:i1
+	opr0:o2 -> opr3:i2
+	opr2:o0 -> opr3:i3
+	in0 [label="in0: Tensor[(1, 5, 5, 4), float32]"]
+	opr4 [label="{{}|ones\nshape=[3, 3, 4, 1]\ndtype=\"float32\"|{<o0>Tensor[(3, 3, 4, 1), float32]}}"]
+	opr5 [label="{{<i0>Tensor[(3, 3, 4, 1), float32]}|def\n|{<o0>() -\> Tensor[(3, 3, 4, 1), float32]}}"]
+	opr4:o0 -> opr5:i0
+	opr6 [label="{{<i0>() -\> Tensor[(3, 3, 4, 1), float32]}|call\n|{<o0>Tensor[(3, 3, 4, 1), float32]}}"]
+	opr5:o0 -> opr6:i0
+	opr7 [label="{{}|func\n|{<o0>Tensor[(1, 5, 5, 4), float32]|<o1>Tensor[(3, 3, 4, 1), float32]}}"]
+	opr8 [label="{{<i0>Tensor[(1, 5, 5, 4), float32]|<i1>Tensor[(3, 3, 4, 1), float32]}|nn.conv2d\nstrides=[1, 1]\npadding=[2, 2, 2, 2]\ndilation=[2, 2]\ngroups=4\nchannels=4\nkernel_size=[3, 3]\ndata_layout=\"NHWC\"\nkernel_layout=\"HWOI\"\nout_layout=\"\"\nout_dtype=\"\"|{<o0>Tensor[(1, 5, 5, 4), float32]}}"]
+	opr7:o0 -> opr8:i0
+	opr7:o1 -> opr8:i1
+	opr9 [label="{{<i0>Tensor[(1, 5, 5, 4), float32]|<i1>Tensor[(3, 3, 4, 1), float32]|<i2>Tensor[(1, 5, 5, 4), float32]}|def\n|{<o0>(Tensor[(1, 5, 5, 4), float32], Tensor[(3, 3, 4, 1), float32]) -\> Tensor[(1, 5, 5, 4), float32]}}"]
+	opr7:o0 -> opr9:i0
+	opr7:o1 -> opr9:i1
+	opr8:o0 -> opr9:i2
+	opr10 [label="{{<i0>(Tensor[(1, 5, 5, 4), float32], Tensor[(3, 3, 4, 1), float32]) -\> Tensor[(1, 5, 5, 4), float32]|<i1>Tensor[(1, 5, 5, 4), float32]|<i2>Tensor[(3, 3, 4, 1), float32]}|call\n|{<o0>Tensor[(1, 5, 5, 4), float32]}}"]
+	opr9:o0 -> opr10:i0
+	in0 -> opr10:i1
+	opr6:o0 -> opr10:i2
+	opr11 [label="{{<i0>(Tensor[(1, 5, 5, 4), float32], Tensor[(3, 3, 4, 1), float32], Tensor[(1, 5, 5, 4), float32]) -\> Tensor[(1, 5, 5, 4), float32]|<i1>Tensor[(1, 5, 5, 4), float32]|<i2>Tensor[(3, 3, 4, 1), float32]|<i3>Tensor[(1, 5, 5, 4), float32]}|call\n|{<o0>Tensor[(1, 5, 5, 4), float32]}}"]
+	opr3:o0 -> opr11:i0
+	in0 -> opr11:i1
+	opr6:o0 -> opr11:i2
+	opr10:o0 -> opr11:i3
+	out0 [label="out0: Tensor[(1, 5, 5, 4), float32]"]
+	opr11:o0 -> out0
+	opr12 [label="{{}|func\n|{}}"]
+}

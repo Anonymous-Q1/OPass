@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(4, 7), float32], %y: Tensor[(4, 2), float32]) {
+  %0 = shape_of(%y, dtype="int32");
+  dyn.tile(%x, %0, reps=[])
+}

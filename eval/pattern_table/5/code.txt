@@ -1,0 +1,16 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 5, 5, 4), float32] /* ty=Tensor[(1, 5, 5, 4), float32] */) -> Tensor[(1, 5, 5, 4), float32] {
+  %1 = fn (Primitive=1) -> Tensor[(3, 3, 4, 1), float32] {
+    ones(shape=[3, 3, 4, 1], dtype="float32") /* ty=Tensor[(3, 3, 4, 1), float32] */
+  } /* ty=fn () -> Tensor[(3, 3, 4, 1), float32] */;
+  %2 = %1() /* ty=Tensor[(3, 3, 4, 1), float32] */;
+  %3 = fn (%p01: Tensor[(1, 5, 5, 4), float32] /* ty=Tensor[(1, 5, 5, 4), float32] */, %p11: Tensor[(3, 3, 4, 1), float32] /* ty=Tensor[(3, 3, 4, 1), float32] */, Primitive=1) -> Tensor[(1, 5, 5, 4), float32] {
+    nn.conv2d(%p01, %p11, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI") /* ty=Tensor[(1, 5, 5, 4), float32] */
+  } /* ty=fn (Tensor[(1, 5, 5, 4), float32], Tensor[(3, 3, 4, 1), float32]) -> Tensor[(1, 5, 5, 4), float32] */;
+  %4 = %3(%x, %2) /* ty=Tensor[(1, 5, 5, 4), float32] */;
+  %5 = fn (%p0: Tensor[(1, 5, 5, 4), float32] /* ty=Tensor[(1, 5, 5, 4), float32] */, %p1: Tensor[(3, 3, 4, 1), float32] /* ty=Tensor[(3, 3, 4, 1), float32] */, %p2: Tensor[(1, 5, 5, 4), float32] /* ty=Tensor[(1, 5, 5, 4), float32] */, Primitive=1) -> Tensor[(1, 5, 5, 4), float32] {
+    %0 = nn.conv2d(%p0, %p1, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI") /* ty=Tensor[(1, 5, 5, 4), float32] */;
+    add(%0, %p2) /* ty=Tensor[(1, 5, 5, 4), float32] */
+  } /* ty=fn (Tensor[(1, 5, 5, 4), float32], Tensor[(3, 3, 4, 1), float32], Tensor[(1, 5, 5, 4), float32]) -> Tensor[(1, 5, 5, 4), float32] */;
+  %5(%x, %2, %4) /* ty=Tensor[(1, 5, 5, 4), float32] */
+}

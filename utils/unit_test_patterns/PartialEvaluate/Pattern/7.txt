@@ -1,0 +1,18 @@
+#[version = "0.0.5"]
+def @main(%d: bool) {
+  let %r = ref(0);
+  let %fetch = fn () {
+    ref_read(%r)
+  };
+  let %fetch_obscured = if (%d) {
+    %fetch
+  } else {
+    %fetch
+  };
+  let %u = ref_write(%r, 1);
+  if (%d) {
+    %fetch_obscured()
+  } else {
+    %fetch_obscured()
+  }
+}

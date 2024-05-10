@@ -1,0 +1,40 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(10, 20), float32], %x1: Tensor[(19, 20), float32], %x2: Tensor[(10, 20), float32], %x3: Tensor[(10,), float32], %x4: Tensor[(10,), float32], %x5: Tensor[(92, 20), float32], %x6: Tensor[(59, 20), float32], %x7: Tensor[(21, 10), float32], %x8: Tensor[(21,), float32], %x9: Tensor[(1,), float32], %x10: Tensor[(42, 10), float32], %x11: Tensor[(42,), float32], %x12: Tensor[(1,), float32], %x13: Tensor[(10, 59, 1), float32]) {
+    %0 = add(%x0, 1.0f);
+    %1 = exp(%0);
+    %2 = squeeze(%1, axis=None);
+    %3 = add(%2, 1.0f);
+    %4 = exp(%3);
+    %5 = squeeze(%4, axis=None);
+    %6 = add(%5, %5);
+    %7 = ones(shape=[1], dtype="float32");
+    %8 = multiply(%7, %2);
+    %9 = nn.dense(%x1, %8, units=None, out_dtype="");
+    %10 = add(%9, %x3);
+    %11 = nn.dense(%x1, %x2, units=None, out_dtype="");
+    %12 = add(%11, %x4);
+    %13 = (%10, %12);
+    %14 = add(%1, 1.0f);
+    %15 = exp(%14);
+    %16 = squeeze(%15, axis=None);
+    %17 = nn.dense(%16, %x5, units=None, out_dtype="");
+    %18 = expand_dims(%17, axis=2, num_newaxis=1);
+    %19 = nn.dense(%16, %x6, units=None, out_dtype="");
+    %20 = expand_dims(%19, axis=2, num_newaxis=1);
+    %21 = (%18, %20);
+    %22 = nn.dense(%10, %x7, units=None, out_dtype="");
+    %23 = add(%22, %x8);
+    %24 = multiply(%23, %x9);
+    %25 = reshape(%24, newshape=[1, 1, 399], allowzero=0);
+    %26 = nn.dense(%10, %x10, units=None, out_dtype="");
+    %27 = add(%26, %x11);
+    %28 = multiply(%27, %x12);
+    %29 = reshape(%28, newshape=[1, 1, 798], allowzero=0);
+    %30 = (%25, %29);
+    %31 = ones(shape=[1], dtype="float32");
+    %32 = multiply(%31, %x12);
+    %33 = add(%20, %x13);
+    %34 = ndarray_size(%33, dtype="int32");
+    %35 = (%6, %13, %21, %30, %32, %34);
+    %35
+}

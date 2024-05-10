@@ -1,0 +1,1 @@
+[('CombineParallelBatchMatmul', {'min_num_branches': 2})]

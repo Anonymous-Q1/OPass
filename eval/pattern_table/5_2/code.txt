@@ -1,0 +1,101 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */) -> Tensor[(2, 16), float32] {
+  %4 = fn (%x1: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */) -> Tensor[(2, 16), float32] {
+    %3 = fn (%p01: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, %p11: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, Primitive=1) -> Tensor[(2, 16), float32] {
+      %0 = nn.relu(%p01) /* ty=Tensor[(1, 16), float32] */;
+      %1 = add(%0, 1f /* ty=float32 */) /* ty=Tensor[(1, 16), float32] */;
+      %2 = (%1, %p11) /* ty=(Tensor[(1, 16), float32], Tensor[(1, 16), float32]) */;
+      concatenate(%2) /* ty=Tensor[(2, 16), float32] */
+    } /* ty=fn (Tensor[(1, 16), float32], Tensor[(1, 16), float32]) -> Tensor[(2, 16), float32] */;
+    %3(%x1, meta[relay.Constant][0] /* ty=Tensor[(1, 16), float32] */) /* ty=Tensor[(2, 16), float32] */
+  } /* ty=fn (Tensor[(1, 16), float32]) -> Tensor[(2, 16), float32] */;
+  %9 = fn (%x2: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */) -> Tensor[(2, 16), float32] {
+    %8 = fn (%p02: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, %p12: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, Primitive=1) -> Tensor[(2, 16), float32] {
+      %5 = nn.relu(%p02) /* ty=Tensor[(1, 16), float32] */;
+      %6 = add(%5, 1f /* ty=float32 */) /* ty=Tensor[(1, 16), float32] */;
+      %7 = (%6, %p12) /* ty=(Tensor[(1, 16), float32], Tensor[(1, 16), float32]) */;
+      concatenate(%7) /* ty=Tensor[(2, 16), float32] */
+    } /* ty=fn (Tensor[(1, 16), float32], Tensor[(1, 16), float32]) -> Tensor[(2, 16), float32] */;
+    %8(%x2, meta[relay.Constant][0] /* ty=Tensor[(1, 16), float32] */) /* ty=Tensor[(2, 16), float32] */
+  } /* ty=fn (Tensor[(1, 16), float32]) -> Tensor[(2, 16), float32] */;
+  %10 = %4(%x) /* ty=Tensor[(2, 16), float32] */;
+  %11 = %9(%x) /* ty=Tensor[(2, 16), float32] */;
+  %12 = fn (%p0: Tensor[(2, 16), float32] /* ty=Tensor[(2, 16), float32] */, %p1: Tensor[(2, 16), float32] /* ty=Tensor[(2, 16), float32] */, Primitive=1) -> Tensor[(2, 16), float32] {
+    add(%p0, %p1) /* ty=Tensor[(2, 16), float32] */
+  } /* ty=fn (Tensor[(2, 16), float32], Tensor[(2, 16), float32]) -> Tensor[(2, 16), float32] */;
+  %12(%10, %11) /* ty=Tensor[(2, 16), float32] */
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "6", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "relay.TensorType", 
+      "attrs": {
+        "dtype": "float32", 
+        "shape": "7", 
+        "span": "0"
+      }
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [8, 9]
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "16"
+      }
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAgAAAAIgAQABAAAAAAAAABAAAAAAAAAAQAAAAAAAAAAAAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/"
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

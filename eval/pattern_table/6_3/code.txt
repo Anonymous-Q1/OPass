@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 3, 224, 224), int8] /* ty=Tensor[(1, 3, 224, 224), int8] */) -> Tensor[(1, 3, 222, 222), int8] {
+  %0 = qnn.dequantize(%x, 2f /* ty=float32 */, 0 /* ty=int32 */) /* ty=Tensor[(1, 3, 224, 224), float32] */;
+  %1 = nn.max_pool2d(%0, pool_size=[3, 3], padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 3, 222, 222), float32] */;
+  qnn.quantize(%1, 2f /* ty=float32 */, 0 /* ty=int32 */, out_dtype="int8") /* ty=Tensor[(1, 3, 222, 222), int8] */
+}

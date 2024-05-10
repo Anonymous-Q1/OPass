@@ -1,0 +1,17 @@
+#[version = "0.0.5"]
+def @g1() {
+  1
+}
+
+def @g2() {
+  2
+}
+
+def @main(%p: bool) {
+  %0 = if (%p) {
+    @g1
+  } else {
+    @g2
+  };
+  %0()
+}

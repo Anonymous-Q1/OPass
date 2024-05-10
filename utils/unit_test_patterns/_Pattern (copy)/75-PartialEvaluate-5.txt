@@ -1,0 +1,14 @@
+#[version = "0.0.5"]
+def @main(%d: Tensor[(10, 10), float32]) {
+  let %x = multiply(%d, %d);
+  let %x1 = ones_like(%x);
+  %0 = multiply(%x1, %d);
+  %1 = zeros_like(%d);
+  %2 = collapse_sum_like(%0, %d);
+  %3 = multiply(%x1, %d);
+  %4 = add(%1, %2);
+  %5 = collapse_sum_like(%3, %d);
+  %6 = add(%4, %5);
+  %7 = (%6,);
+  (%x, %7)
+}

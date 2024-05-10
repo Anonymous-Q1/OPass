@@ -1,0 +1,13 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 16, 64, 64), float32]"]
+	opr0 [label="{{<i0>Tensor[(1, 16, 64, 64), float32]}|nn.max_pool2d\npool_size=[2, 2]\nstrides=[2, 2]\ndilation=[1, 1]\npadding=[0, 0, 0, 0]\nlayout=\"NCHW\"\nout_layout=\"\"\nceil_mode=0|{<o0>Tensor[(1, 16, 32, 32), float32]}}"]
+	in0 -> opr0:i0
+	opr1 [label="{{<i0>Tensor[(1, 16, 32, 32), float32]}|nn.upsampling\nscale_h=2.0f\nscale_w=2.0f\nlayout=\"NCHW\"\nmethod=\"nearest_neighbor\"\nalign_corners=0|{<o0>Tensor[(1, 16, 64, 64), float32]}}"]
+	opr0:o0 -> opr1:i0
+	opr2 [label="{{<i0>Tensor[(1, 16, 64, 64), float32]|<i1>Tensor[(1, 16, 64, 64), float32]}|tuple\n|{<o0>(Tensor[(1, 16, 64, 64), float32], Tensor[(1, 16, 64, 64), float32])}}"]
+	opr1:o0 -> opr2:i0
+	in0 -> opr2:i1
+	out0 [label="out0: (Tensor[(1, 16, 64, 64), float32], Tensor[(1, 16, 64, 64), float32])"]
+	opr2:o0 -> out0
+}

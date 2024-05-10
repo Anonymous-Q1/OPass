@@ -1,0 +1,19 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	con0 [label="con0: float32"]
+	opr0 [label="{{<i0>float32}|full\nshape=[10]\ndtype=\"\"|{<o0>Tensor[(10,), float32]}}"]
+	con0 -> opr0:i0
+	in0 [label="in0: Tensor[(10,), float32]"]
+	opr1 [label="{{<i0>Tensor[(10,), float32]|<i1>Tensor[(10,), float32]}|subtract\n|{<o0>Tensor[(10,), float32]}}"]
+	opr0:o0 -> opr1:i0
+	in0 -> opr1:i1
+	con1 [label="con1: float32"]
+	opr2 [label="{{<i0>float32|<i1>Tensor[(10,), float32]}|subtract\n|{<o0>Tensor[(10,), float32]}}"]
+	con1 -> opr2:i0
+	in0 -> opr2:i1
+	opr3 [label="{{<i0>Tensor[(10,), float32]|<i1>Tensor[(10,), float32]}|add\n|{<o0>Tensor[(10,), float32]}}"]
+	opr1:o0 -> opr3:i0
+	opr2:o0 -> opr3:i1
+	out0 [label="out0: Tensor[(10,), float32]"]
+	opr3:o0 -> out0
+}

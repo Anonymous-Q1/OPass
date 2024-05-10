@@ -1,0 +1,34 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 100, 300), float32]"]
+	in1 [label="in1: Tensor[(1, 200, 300), float32]"]
+	opr0 [label="{{<i0>Tensor[(1, 100, 300), float32]|<i1>Tensor[(1, 200, 300), float32]}|nn.batch_matmul\nout_dtype=\"\"\ntranspose_a=0\ntranspose_b=1|{<o0>Tensor[(1, 100, 200), float32]}}"]
+	in0 -> opr0:i0
+	in1 -> opr0:i1
+	in2 [label="in2: Tensor[(200,), float32]"]
+	opr1 [label="{{<i0>Tensor[(1, 100, 200), float32]|<i1>Tensor[(200,), float32]}|add\n|{<o0>Tensor[(1, 100, 200), float32]}}"]
+	opr0:o0 -> opr1:i0
+	in2 -> opr1:i1
+	in3 [label="in3: Tensor[(1, 200, 300), float32]"]
+	opr2 [label="{{<i0>Tensor[(1, 100, 300), float32]|<i1>Tensor[(1, 200, 300), float32]}|nn.batch_matmul\nout_dtype=\"\"\ntranspose_a=0\ntranspose_b=1|{<o0>Tensor[(1, 100, 200), float32]}}"]
+	in0 -> opr2:i0
+	in3 -> opr2:i1
+	in4 [label="in4: Tensor[(200,), float32]"]
+	opr3 [label="{{<i0>Tensor[(1, 100, 200), float32]|<i1>Tensor[(200,), float32]}|add\n|{<o0>Tensor[(1, 100, 200), float32]}}"]
+	opr2:o0 -> opr3:i0
+	in4 -> opr3:i1
+	in5 [label="in5: Tensor[(1, 200, 300), float32]"]
+	opr4 [label="{{<i0>Tensor[(1, 100, 300), float32]|<i1>Tensor[(1, 200, 300), float32]}|nn.batch_matmul\nout_dtype=\"\"\ntranspose_a=0\ntranspose_b=1|{<o0>Tensor[(1, 100, 200), float32]}}"]
+	in0 -> opr4:i0
+	in5 -> opr4:i1
+	in6 [label="in6: Tensor[(200,), float32]"]
+	opr5 [label="{{<i0>Tensor[(1, 100, 200), float32]|<i1>Tensor[(200,), float32]}|add\n|{<o0>Tensor[(1, 100, 200), float32]}}"]
+	opr4:o0 -> opr5:i0
+	in6 -> opr5:i1
+	opr6 [label="{{<i0>Tensor[(1, 100, 200), float32]|<i1>Tensor[(1, 100, 200), float32]|<i2>Tensor[(1, 100, 200), float32]}|tuple\n|{<o0>(Tensor[(1, 100, 200), float32], Tensor[(1, 100, 200), float32], Tensor[(1, 100, 200), float32])}}"]
+	opr1:o0 -> opr6:i0
+	opr3:o0 -> opr6:i1
+	opr5:o0 -> opr6:i2
+	out0 [label="out0: (Tensor[(1, 100, 200), float32], Tensor[(1, 100, 200), float32], Tensor[(1, 100, 200), float32])"]
+	opr6:o0 -> out0
+}

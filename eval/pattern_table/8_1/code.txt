@@ -1,0 +1,16 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(128, 64), int8] /* ty=Tensor[(128, 64), int8] */, %w: Tensor[(256, 64), int8] /* ty=Tensor[(256, 64), int8] */) -> Tensor[(128, 256), int8] {
+  %1 = fn (%p01: Tensor[(128, 64), int8] /* ty=Tensor[(128, 64), int8] */, %p11: int32 /* ty=int32 */, Primitive=1) -> Tensor[(128, 64), float32] {
+    qnn.dequantize(%p01, 2f /* ty=float32 */, %p11) /* ty=Tensor[(128, 64), float32] */
+  } /* ty=fn (Tensor[(128, 64), int8], int32) -> Tensor[(128, 64), float32] */;
+  %2 = fn (%p02: Tensor[(256, 64), int8] /* ty=Tensor[(256, 64), int8] */, %p12: int32 /* ty=int32 */, Primitive=1) -> Tensor[(256, 64), float32] {
+    qnn.dequantize(%p02, 0.5f /* ty=float32 */, %p12) /* ty=Tensor[(256, 64), float32] */
+  } /* ty=fn (Tensor[(256, 64), int8], int32) -> Tensor[(256, 64), float32] */;
+  %3 = %1(%x, 0 /* ty=int32 */) /* ty=Tensor[(128, 64), float32] */;
+  %4 = %2(%w, 0 /* ty=int32 */) /* ty=Tensor[(256, 64), float32] */;
+  %5 = fn (%p0: Tensor[(128, 64), float32] /* ty=Tensor[(128, 64), float32] */, %p1: Tensor[(256, 64), float32] /* ty=Tensor[(256, 64), float32] */, %p2: int32 /* ty=int32 */, Primitive=1) -> Tensor[(128, 256), int8] {
+    %0 = nn.dense(%p0, %p1, units=None) /* ty=Tensor[(128, 256), float32] */;
+    qnn.quantize(%0, 1f /* ty=float32 */, %p2, out_dtype="int8") /* ty=Tensor[(128, 256), int8] */
+  } /* ty=fn (Tensor[(128, 64), float32], Tensor[(256, 64), float32], int32) -> Tensor[(128, 256), int8] */;
+  %5(%3, %4, 0 /* ty=int32 */) /* ty=Tensor[(128, 256), int8] */
+}

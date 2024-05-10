@@ -1,0 +1,35 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 3, 10, 10), int8], %x1: Tensor[(1, 6, 10, 10), float32], %x2: Tensor[(92,), int64], %x3: Tensor[(1, 6, 10, 41), float32], %x4: Tensor[(1, 6, 10, 72), float32]) {
+    %0 = qnn.dequantize(%x0, 2.0f, 0, axis=-1);
+    %1 = nn.depth_to_space(%0, block_size=4, layout="NCHW", mode="DCR");
+    %2 = max(%1, axis=None, keepdims=0, exclude=0);
+    %3 = qnn.quantize(%2, 2.0f, 0, out_dtype="int8", axis=-1);
+    %4 = nn.max_pool2d(%0, pool_size=[2, 2], strides=[2, 2], dilation=[1, 1], padding=[0, 0, 0, 0], layout="NCHW", out_layout="", ceil_mode=0);
+    %5 = nn.upsampling(%4, scale_h=2.0f, scale_w=2.0f, layout="NCHW", method="nearest_neighbor", align_corners=0);
+    %6 = (%5, %0);
+    %7 = concatenate(%6, axis=1);
+    %8 = add(%7, 1.0f);
+    %9 = zeros(shape=[1], dtype="float32");
+    %10 = add(%4, %9);
+    %11 = qnn.dequantize(%x0, 2.0f, 0, axis=-1);
+    %12 = split(%11, indices_or_sections=2, axis=3);
+    %13 = %12.0;
+    %14 = qnn.quantize(%13, 2.0f, 0, out_dtype="int8", axis=-1);
+    %15 = qnn.dequantize(%14, 2.0f, 0, axis=-1);
+    %16 = argmin(%15, axis=[1], keepdims=0, select_last_index=0, exclude=0);
+    %17 = add(%7, %x1);
+    %18 = ndarray_size(%17, dtype="int32");
+    %19 = add(2.0f, 1.0f);
+    %20 = annotation.stop_fusion(%19);
+    %21 = exp(%20);
+    %22 = squeeze(%15, axis=None);
+    %23 = strided_slice(%22, begin=[0, 0, 0], end=[3, 10, 5], strides=[1, 1, 1], slice_mode="end", axes=None);
+    %24 = take(%23, %x2, batch_dims=0, axis=0, mode="clip");
+    %25 = (%17, %x3, %x4);
+    %26 = concatenate(%25, axis=3);
+    %27 = layout_transform(%1, src_layout="NCHW", dst_layout="NHWC");
+    %28 = layout_transform(%27, src_layout="NHWC", dst_layout="CHWN");
+    %29 = nn.relu(%28);
+    %30 = (%3, %8, %10, %16, %18, %21, %24, %26, %29);
+    %30
+}

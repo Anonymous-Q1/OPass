@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(4, 8), int32]) {
+  %0 = clip(%x, a_min=0f, a_max=255f);
+  %1 = cast(%0, dtype="uint8");
+  cast(%1, dtype="int32")
+}

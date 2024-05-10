@@ -1,0 +1,13 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 5, 5, 4), float32]) {
+  %0 = reshape(%x, newshape=[1, 20, -1]);
+  %1 = reshape(%0, newshape=[1, 5, 5, 4]);
+  %2 = ones(shape=[3, 3, 4, 1], dtype="float32");
+  %3 = nn.conv2d(%1, %2, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI");
+  %4 = reshape(%3, newshape=[1, 20, -1]);
+  %5 = reshape(%x, newshape=[1, 5, 5, 4]);
+  %6 = nn.conv2d(%5, %2, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI");
+  %7 = reshape(%4, newshape=[1, 5, 5, 4]);
+  %8 = reshape(%6, newshape=[1, 5, 5, 4]);
+  add(%7, %8)
+}

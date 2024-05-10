@@ -1,0 +1,16 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	opr0 [label="{{}|func\n|{<o0>float32}}"]
+	opr1 [label="{{<i0>float32|<i1>float32}|add\n|{<o0>float32}}"]
+	opr0:o0 -> opr1:i0
+	opr0:o0 -> opr1:i1
+	opr2 [label="{{<i0>float32|<i1>float32}|def\n|{<o0>(float32) -\> float32}}"]
+	opr0:o0 -> opr2:i0
+	opr1:o0 -> opr2:i1
+	con0 [label="con0: float32"]
+	opr3 [label="{{<i0>(float32) -\> float32|<i1>float32}|call\n|{<o0>float32}}"]
+	opr2:o0 -> opr3:i0
+	con0 -> opr3:i1
+	out0 [label="out0: float32"]
+	opr3:o0 -> out0
+}

@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x3: Tensor[(1, 16, 16, 16), float32]) {
+  erf(%x3)
+}

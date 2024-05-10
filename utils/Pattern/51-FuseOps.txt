@@ -1,0 +1,15 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 16, 64, 64), float32], %w, %w1, %w2, %w3) {
+  %0 = nn.conv2d(%x, %w, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]);
+  %1 = nn.conv2d(%x, %w1, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]);
+  %2 = nn.relu(%0);
+  %3 = nn.relu(%1);
+  %4 = (%2, %3);
+  %5 = concatenate(%4, axis=1);
+  %6 = nn.conv2d(%5, %w2, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]);
+  %7 = nn.conv2d(%5, %w3, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]);
+  %8 = nn.relu(%6);
+  %9 = nn.relu(%7);
+  %10 = (%8, %9);
+  concatenate(%10, axis=1)
+}

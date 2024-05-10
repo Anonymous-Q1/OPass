@@ -1,0 +1,97 @@
+#[version = "0.0.5"]
+def @main() -> (Tensor[(10, 10), float32], ()) {
+  %0 = fn () -> () {
+    () /* ty=() */
+  } /* ty=fn () -> () */;
+  let %x_0: ref(fn () -> ()) /* ty=ref(fn () -> ()) */ = ref(%0);
+  %3 = fn (%bp: ref(fn () -> ()) /* ty=ref(fn () -> ()) */) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) {
+    let %x_1: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] */ = meta[relay.Constant][0] /* ty=Tensor[(10, 10), float32] */;
+    %1 = zeros_like(%x_1) /* ty=Tensor[(10, 10), float32] */;
+    %2 = ref(%1);
+    (%x_1, %2) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */
+  } /* ty=fn (ref(fn () -> ())) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */;
+  let %x_2: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */ = %3(%x_0) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */;
+  %4 = %x_2.1 /* ty=ref(Tensor[(10, 10), float32]) */;
+  %5 = %x_2.0 /* ty=Tensor[(10, 10), float32] */;
+  %6 = ones_like(%5) /* ty=Tensor[(10, 10), float32] */;
+  let %x_3: () /* ty=() */ = ref_write(%4, %6);
+  %7 = ref_read(%x_0);
+  let %x_4: () /* ty=() */ = %7() /* ty=() */;
+  %8 = %x_2.0 /* ty=Tensor[(10, 10), float32] */;
+  %9 = () /* ty=() */;
+  (%8, %9) /* ty=(Tensor[(10, 10), float32], ()) */
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "6", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "relay.TensorType", 
+      "attrs": {
+        "dtype": "float32", 
+        "shape": "7", 
+        "span": "0"
+      }
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [8, 9]
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "10"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "10"
+      }
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAgAAAAIgAQAKAAAAAAAAAAoAAAAAAAAAkAEAAAAAAAAAAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/"
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

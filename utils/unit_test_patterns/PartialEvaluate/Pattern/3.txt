@@ -1,0 +1,9 @@
+#[version = "0.0.5"]
+def @main(%d: float32) {
+  let %r: ref(float32) = ref(%d);
+  %0 = ref_read(%r);
+  %1 = ref_read(%r);
+  %2 = multiply(%0, %1);
+  let %x = ref_write(%r, %2);
+  ref_read(%r)
+}

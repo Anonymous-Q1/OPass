@@ -1,0 +1,20 @@
+#[version = "0.0.5"]
+def @main(%x0: int32, %x1: int32) {
+    let %x2 = 1;
+    %0 = add(%x2, %x2);
+    let %x3 = %x1;
+    %1 = cast(%x3, dtype="int32");
+    let %x4 = 2;
+    %2 = clip(%x4, a_min=0.0f, a_max=255.0f);
+    %3 = cast(%2, dtype="uint8");
+    %4 = clip(%3, a_min=0.0f, a_max=255.0f);
+    %5 = ones_like(%x3);
+    let %x5 = %x0;
+    %6 = ones_like(%x5);
+    %7 = cast(%3, dtype="int32");
+    %8 = ones_like(%7);
+    %9 = cast(%7, dtype="int32");
+    %10 = zeros_like(%2);
+    %11 = (%0, %1, %4, %5, %6, %8, %9, %10);
+    %11
+}

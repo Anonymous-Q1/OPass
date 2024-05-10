@@ -1,0 +1,27 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 4, 16, 16), float32]"]
+	in1 [label="in1: Tensor[(4, 4, 1, 1), float32]"]
+	opr0 [label="{{<i0>Tensor[(1, 4, 16, 16), float32]|<i1>Tensor[(4, 4, 1, 1), float32]}|nn.conv2d\nstrides=[1, 1]\npadding=[0, 0, 0, 0]\ndilation=[1, 1]\ngroups=1\nchannels=None\nkernel_size=None\ndata_layout=\"NCHW\"\nkernel_layout=\"OIHW\"\nout_layout=\"\"\nout_dtype=\"\"|{<o0>Tensor[(1, 4, 16, 16), float32]}}"]
+	in0 -> opr0:i0
+	in1 -> opr0:i1
+	in2 [label="in2: Tensor[(4, 4, 1, 1), float32]"]
+	opr1 [label="{{<i0>Tensor[(1, 4, 16, 16), float32]|<i1>Tensor[(4, 4, 1, 1), float32]}|nn.conv2d\nstrides=[1, 1]\npadding=[0, 0, 0, 0]\ndilation=[1, 1]\ngroups=1\nchannels=None\nkernel_size=None\ndata_layout=\"NCHW\"\nkernel_layout=\"OIHW\"\nout_layout=\"\"\nout_dtype=\"\"|{<o0>Tensor[(1, 4, 16, 16), float32]}}"]
+	in0 -> opr1:i0
+	in2 -> opr1:i1
+	opr2 [label="{{<i0>Tensor[(1, 4, 16, 16), float32]|<i1>Tensor[(1, 4, 16, 16), float32]}|add\n|{<o0>Tensor[(1, 4, 16, 16), float32]}}"]
+	opr0:o0 -> opr2:i0
+	opr1:o0 -> opr2:i1
+	in3 [label="in3: Tensor[(4, 4, 1, 1), float32]"]
+	opr3 [label="{{<i0>Tensor[(1, 4, 16, 16), float32]|<i1>Tensor[(4, 4, 1, 1), float32]}|nn.conv2d\nstrides=[1, 1]\npadding=[0, 0, 0, 0]\ndilation=[1, 1]\ngroups=1\nchannels=None\nkernel_size=None\ndata_layout=\"NCHW\"\nkernel_layout=\"OIHW\"\nout_layout=\"\"\nout_dtype=\"\"|{<o0>Tensor[(1, 4, 16, 16), float32]}}"]
+	in0 -> opr3:i0
+	in3 -> opr3:i1
+	opr4 [label="{{<i0>Tensor[(1, 4, 16, 16), float32]|<i1>Tensor[(1, 4, 16, 16), float32]}|add\n|{<o0>Tensor[(1, 4, 16, 16), float32]}}"]
+	opr1:o0 -> opr4:i0
+	opr3:o0 -> opr4:i1
+	opr5 [label="{{<i0>Tensor[(1, 4, 16, 16), float32]|<i1>Tensor[(1, 4, 16, 16), float32]}|tuple\n|{<o0>(Tensor[(1, 4, 16, 16), float32], Tensor[(1, 4, 16, 16), float32])}}"]
+	opr2:o0 -> opr5:i0
+	opr4:o0 -> opr5:i1
+	out0 [label="out0: (Tensor[(1, 4, 16, 16), float32], Tensor[(1, 4, 16, 16), float32])"]
+	opr5:o0 -> out0
+}

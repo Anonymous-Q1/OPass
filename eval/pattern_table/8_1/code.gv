@@ -1,0 +1,57 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	opr0 [label="{{}|func\n|{<o0>Tensor[(128, 64), float32]|<o1>Tensor[(256, 64), float32]|<o2>int32}}"]
+	opr1 [label="{{<i0>Tensor[(128, 64), float32]|<i1>Tensor[(256, 64), float32]}|nn.dense\nunits=None\nout_dtype=\"\"|{<o0>Tensor[(128, 256), float32]}}"]
+	opr0:o0 -> opr1:i0
+	opr0:o1 -> opr1:i1
+	con0 [label="con0: float32"]
+	opr2 [label="{{<i0>Tensor[(128, 256), float32]|<i1>float32|<i2>int32}|qnn.quantize\nout_dtype=\"int8\"\naxis=-1|{<o0>Tensor[(128, 256), int8]}}"]
+	opr1:o0 -> opr2:i0
+	con0 -> opr2:i1
+	opr0:o2 -> opr2:i2
+	opr3 [label="{{<i0>Tensor[(128, 64), float32]|<i1>Tensor[(256, 64), float32]|<i2>int32|<i3>Tensor[(128, 256), int8]}|def\n|{<o0>(Tensor[(128, 64), float32], Tensor[(256, 64), float32], int32) -\> Tensor[(128, 256), int8]}}"]
+	opr0:o0 -> opr3:i0
+	opr0:o1 -> opr3:i1
+	opr0:o2 -> opr3:i2
+	opr2:o0 -> opr3:i3
+	opr4 [label="{{}|func\n|{<o0>Tensor[(128, 64), int8]|<o1>int32}}"]
+	con1 [label="con1: float32"]
+	opr5 [label="{{<i0>Tensor[(128, 64), int8]|<i1>float32|<i2>int32}|qnn.dequantize\naxis=-1|{<o0>Tensor[(128, 64), float32]}}"]
+	opr4:o0 -> opr5:i0
+	con1 -> opr5:i1
+	opr4:o1 -> opr5:i2
+	opr6 [label="{{<i0>Tensor[(128, 64), int8]|<i1>int32|<i2>Tensor[(128, 64), float32]}|def\n|{<o0>(Tensor[(128, 64), int8], int32) -\> Tensor[(128, 64), float32]}}"]
+	opr4:o0 -> opr6:i0
+	opr4:o1 -> opr6:i1
+	opr5:o0 -> opr6:i2
+	in0 [label="in0: Tensor[(128, 64), int8]"]
+	con2 [label="con2: int32"]
+	opr7 [label="{{<i0>(Tensor[(128, 64), int8], int32) -\> Tensor[(128, 64), float32]|<i1>Tensor[(128, 64), int8]|<i2>int32}|call\n|{<o0>Tensor[(128, 64), float32]}}"]
+	opr6:o0 -> opr7:i0
+	in0 -> opr7:i1
+	con2 -> opr7:i2
+	opr8 [label="{{}|func\n|{<o0>Tensor[(256, 64), int8]|<o1>int32}}"]
+	con3 [label="con3: float32"]
+	opr9 [label="{{<i0>Tensor[(256, 64), int8]|<i1>float32|<i2>int32}|qnn.dequantize\naxis=-1|{<o0>Tensor[(256, 64), float32]}}"]
+	opr8:o0 -> opr9:i0
+	con3 -> opr9:i1
+	opr8:o1 -> opr9:i2
+	opr10 [label="{{<i0>Tensor[(256, 64), int8]|<i1>int32|<i2>Tensor[(256, 64), float32]}|def\n|{<o0>(Tensor[(256, 64), int8], int32) -\> Tensor[(256, 64), float32]}}"]
+	opr8:o0 -> opr10:i0
+	opr8:o1 -> opr10:i1
+	opr9:o0 -> opr10:i2
+	in1 [label="in1: Tensor[(256, 64), int8]"]
+	con4 [label="con4: int32"]
+	opr11 [label="{{<i0>(Tensor[(256, 64), int8], int32) -\> Tensor[(256, 64), float32]|<i1>Tensor[(256, 64), int8]|<i2>int32}|call\n|{<o0>Tensor[(256, 64), float32]}}"]
+	opr10:o0 -> opr11:i0
+	in1 -> opr11:i1
+	con4 -> opr11:i2
+	con5 [label="con5: int32"]
+	opr12 [label="{{<i0>(Tensor[(128, 64), float32], Tensor[(256, 64), float32], int32) -\> Tensor[(128, 256), int8]|<i1>Tensor[(128, 64), float32]|<i2>Tensor[(256, 64), float32]|<i3>int32}|call\n|{<o0>Tensor[(128, 256), int8]}}"]
+	opr3:o0 -> opr12:i0
+	opr7:o0 -> opr12:i1
+	opr11:o0 -> opr12:i2
+	con5 -> opr12:i3
+	out0 [label="out0: Tensor[(128, 256), int8]"]
+	opr12:o0 -> out0
+}

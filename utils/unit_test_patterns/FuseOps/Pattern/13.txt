@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(10, 20), float32]) {
+  %0 = add(%x, 1f);
+  %1 = squeeze(%0);
+  %2 = transpose(%0, axes=[0, 1]);
+  left_shift(%1, %2)
+}

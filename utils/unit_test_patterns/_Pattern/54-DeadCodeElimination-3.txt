@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%d: int, %b: int) {
+    let %a = %b;
+    let %c = %d;
+    %c
+}

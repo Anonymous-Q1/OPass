@@ -1,0 +1,9 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 5, 5, 4), float32]) {
+  %0 = ones(shape=[3, 3, 4, 1], dtype="float32");
+  %1 = nn.space_to_batch_nd(%x, block_shape=[2, 2], paddings=[[2, 3], [2, 3]]);
+  %2 = nn.conv2d(%1, %0, padding=[0, 0, 0, 0], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI");
+  %3 = nn.conv2d(%x, %0, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI");
+  %4 = nn.batch_to_space_nd(%2, block_shape=[2, 2], crops=[[0, 1], [0, 1]]);
+  add(%3, %4)
+}

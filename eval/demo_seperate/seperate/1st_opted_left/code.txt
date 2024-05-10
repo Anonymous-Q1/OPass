@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 5, 5, 4), float32] /* ty=Tensor[(1, 5, 5, 4), float32] span=from_string:3:20 */, %x1: Tensor[(3, 3, 4, 1), float32] /* ty=Tensor[(3, 3, 4, 1), float32] span=from_string:4:24 */) -> Tensor[(1, 5, 5, 4), float32] {
+  nn.conv2d(%x0, %x1, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI") /* ty=Tensor[(1, 5, 5, 4), float32] span=from_string:5:27 */
+}

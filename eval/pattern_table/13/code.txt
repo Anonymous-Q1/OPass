@@ -1,0 +1,9 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(3, 4), float32], %w1: Tensor[(5, 4), float32], %w2: Tensor[(5, 4), float32], %w4: Tensor[(5, 4), float32]) {
+  %0 = nn.dense(%x, %w1, units=None);
+  %1 = nn.dense(%x, %w2, units=None);
+  %2 = nn.dense(%x, %w4, units=None);
+  %3 = add(%0, %1);
+  %4 = add(%1, %2);
+  (%3, %4)
+}

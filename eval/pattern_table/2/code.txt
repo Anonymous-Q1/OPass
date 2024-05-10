@@ -1,0 +1,9 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 5, 5, 4), float32]) {
+  %0 = transpose(%x, axes=[0, 1, 2, 3]);
+  %1 = ones(shape=[3, 3, 4, 1], dtype="float32");
+  %2 = nn.conv2d(%0, %1, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI");
+  %3 = layout_transform(%2, src_layout="NCHW", dst_layout="NCHW");
+  %4 = nn.conv2d(%x, %1, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI");
+  add(%3, %4)
+}

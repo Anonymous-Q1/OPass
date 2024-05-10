@@ -1,0 +1,65 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(128, 64), int8], %w: Tensor[(256, 64), int8], %bias: Tensor[(256), int32]) {
+  %0 = qnn.dequantize(%x, 2f, 0);
+  %1 = qnn.dequantize(%w, meta[relay.Constant][0], 0, axis=0);
+  %2 = nn.dense(%0, %1, units=256);
+  %3 = qnn.dequantize(%bias, meta[relay.Constant][1], 0);
+  %4 = add(%2, %3);
+  qnn.quantize(%4, 1f, 0, out_dtype="int8")
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3, 6]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "1", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }
+  ], 
+  "b64ndarrays": [
+    "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"
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

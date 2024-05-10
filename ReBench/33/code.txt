@@ -1,0 +1,22 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 64, 56, 56), float32], %x1: Tensor[(54, 64, 1, 1), float32], %x2: Tensor[(28, 60, 95, 44), int32], %x3: Tensor[(3456, 1, 1), float32], %x4: Tensor[(55, 64, 1, 1), float32]) {
+    %0 = ones(shape=[1], dtype="float32");
+    %1 = multiply(%0, %x0);
+    %2 = nn.global_max_pool2d(%x0, layout="NCHW", out_layout="");
+    %3 = multiply(%2, %2);
+    %4 = (%2, %x1);
+    %5 = concatenate(%4, axis=0);
+    %6 = cast_like(%5, %x2);
+    %7 = shape_of(%x3, dtype="int32");
+    %8 = dyn.reshape(%x1, %7, newshape=[], allowzero=0);
+    %9 = shape_of(%x1, dtype="int32");
+    %10 = dyn.reshape(%8, %9, newshape=[], allowzero=0);
+    %11 = nn.softmax(%0, axis=-1);
+    %12 = ones_like(%5);
+    %13 = add(%5, %12);
+    %14 = add(%13, %x4);
+    %15 = ndarray_size(%14, dtype="int32");
+    %16 = (%1, %3, %6, %10, %11, %15);
+    let %x5 = 1;
+    %16
+}

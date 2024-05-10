@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(9, 8, 3, 4), float32]) {
+  %0 = shape_of(%x, dtype="int32");
+  dyn.ones(%0, shape=None, dtype="float32")
+}

@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: int32) {
+  %0 = less(%x, 10);
+  min(%0)
+}

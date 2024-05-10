@@ -1,0 +1,20 @@
+#[version = "0.0.5"]
+def @g1(%x1: Tensor[(3, 5), float32], %y1: Tensor[(3, 5), float32], Inline=1) {
+  %0 = add(%x1, %y1);
+  %1 = @g11(%x1);
+  add(%0, %1)
+}
+
+def @g11(%x11: Tensor[(3, 5), float32], Inline=1, Compiler="a") {
+  %x11
+}
+
+def @g2(%x2: Tensor[(3, 5), float32], %y2: Tensor[(3, 5), float32]) {
+  subtract(%x2, %y2)
+}
+
+def @main(%p0: Tensor[(3, 5), float32], %p1: Tensor[(3, 5), float32], %p2: Tensor[(3, 5), float32], %p3: Tensor[(3, 5), float32]) {
+  %2 = @g1(%p0, %p1);
+  %3 = @g2(%p2, %p3);
+  multiply(%2, %3)
+}

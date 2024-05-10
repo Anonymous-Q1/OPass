@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(128, 64), int8] /* ty=Tensor[(128, 64), int8] */, %w: Tensor[(256, 64), int8] /* ty=Tensor[(256, 64), int8] */) -> Tensor[(128, 256), int8] {
+  %0 = qnn.dequantize(%x, 2f /* ty=float32 */, 0 /* ty=int32 */) /* ty=Tensor[(128, 64), float32] */;
+  %1 = qnn.dequantize(%w, 0.5f /* ty=float32 */, 0 /* ty=int32 */) /* ty=Tensor[(256, 64), float32] */;
+  %2 = nn.dense(%0, %1, units=None) /* ty=Tensor[(128, 256), float32] */;
+  qnn.quantize(%2, 1f /* ty=float32 */, 0 /* ty=int32 */, out_dtype="int8") /* ty=Tensor[(128, 256), int8] */
+}

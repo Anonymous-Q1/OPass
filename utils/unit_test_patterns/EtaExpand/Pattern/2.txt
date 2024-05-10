@@ -1,0 +1,8 @@
+#[version = "0.0.5"]
+type List[A] {
+    Cons(A, List[A]),
+    Nil,
+}
+def @main[A]() -> fn(A, List[A]) -> List[A] {
+    Cons
+}

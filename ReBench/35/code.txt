@@ -1,0 +1,25 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1,), float32], %x1: float32) {
+    let %x2 = 1.0f;
+    %0 = add(%x2, %x2);
+    let %x3 = %0;
+    %1 = add(%x3, %x0);
+    %2 = shape_of(%1, dtype="int32");
+    %3 = dyn.ones(%2, shape=None, dtype="float32");
+    %4 = multiply(%0, 2.0f);
+    %5 = (%0, %4);
+    %6 = subtract(2.0f, %x1);
+    %7 = multiply(%6, %x1);
+    let %x4 = %1;
+    %8 = zeros_like(%x4);
+    %9 = nn.softmax(%8, axis=-1);
+    %10 = shape_of(%9, dtype="int32");
+    %11 = dyn.ones(%10, shape=None, dtype="float32");
+    %12 = ones_like(%2);
+    %13 = ones_like(%12);
+    %14 = add(%x4, %8);
+    %15 = zeros(shape=[1], dtype="float32");
+    %16 = add(%14, %15);
+    %17 = (%3, %5, %7, %11, %13, %16);
+    %17
+}

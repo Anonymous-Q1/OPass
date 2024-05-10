@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%indices: Tensor[(3, 2, 4, 5), int32], %on_value: int32, %off_value: int32) {
+  one_hot(%indices, %on_value, %off_value, depth=6, axis=0, dtype="float32")
+}

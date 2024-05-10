@@ -1,0 +1,68 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1), float32]) {
+  let %t1 = on_device(1f, virtual_device=meta[VirtualDevice][0], constrain_result=True);
+  %0 = add(%t1, %t1);
+  let %t2 = on_device(%0, virtual_device=meta[VirtualDevice][1], constrain_result=True);
+  %1 = add(%t2, %x);
+  let %t3 = on_device(%1, virtual_device=meta[VirtualDevice][2], constrain_result=True);
+  %t3
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "VirtualDevice"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3, 5, 7]
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "1", 
+        "memory_scope": "4", 
+        "target": "0", 
+        "virtual_device_id": "0"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "1", 
+        "memory_scope": "6", 
+        "target": "0", 
+        "virtual_device_id": "0"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "1", 
+        "memory_scope": "8", 
+        "target": "0", 
+        "virtual_device_id": "0"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }
+  ], 
+  "b64ndarrays": [], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

@@ -1,0 +1,17 @@
+#[version = "0.0.5"]
+def @g1(Inline=1, Compiler="a") {
+  1
+}
+
+def @g2(Inline=1, Compiler="b") {
+  2
+}
+
+def @main(%p: bool) {
+  %0 = if (%p) {
+    @g1
+  } else {
+    @g2
+  };
+  %0()
+}

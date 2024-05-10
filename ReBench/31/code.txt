@@ -1,0 +1,26 @@
+#[version = "0.0.5"]
+def @main(%x0: int32, %x1: int32) {
+    %0 = less(%x0, 10);
+    %1 = min(%0, axis=None, keepdims=0, exclude=0);
+    let %x2 = 2;
+    %2 = cast(%x2, dtype="uint8");
+    %3 = qnn.dequantize(%2, 2.0f, 114, axis=-1);
+    %4 = nn.leaky_relu(%3, alpha=0.1f);
+    %5 = qnn.quantize(%4, 2.0f, 114, out_dtype="uint8", axis=-1);
+    let %x3 = 1;
+    %6 = add(%x3, %x3);
+    %7 = zeros_like(%6);
+    %8 = ones_like(%6);
+    %9 = clip(%2, a_min=0.0f, a_max=255.0f);
+    %10 = qnn.dequantize(%9, 2.0f, 114, axis=-1);
+    %11 = clip(%10, a_min=0.0f, a_max=6.0f);
+    %12 = qnn.quantize(%11, 2.0f, 114, out_dtype="uint8", axis=-1);
+    %13 = ones_like(114);
+    let %x4 = %x0;
+    %14 = add(%10, 1.0f);
+    %15 = exp(%14);
+    %16 = squeeze(%15, axis=None);
+    %17 = (%1, %5, %7, %8, %12, %13, %x4, %16);
+    let %x5 = %x1;
+    %17
+}

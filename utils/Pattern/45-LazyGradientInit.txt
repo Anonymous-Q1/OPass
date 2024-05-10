@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(10, 10), float32]) {
+  %0 = zeros(shape=[10, 10], dtype="float32");
+  add(%x, %0)
+}

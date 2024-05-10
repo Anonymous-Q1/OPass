@@ -1,0 +1,8 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2, 32), float32] /* ty=Tensor[(2, 32), float32] span=from_string:4:17 */, %w1: Tensor[(16, 32), float32] /* ty=Tensor[(16, 32), float32] span=from_string:3:21 */, %w2: Tensor[(8, 32), float32] /* ty=Tensor[(8, 32), float32] span=from_string:4:21 */) -> (Tensor[(2, 16, 1), float32], Tensor[(2, 8, 1), float32]) {
+  %0 = nn.dense(%x, %w1, units=None) /* ty=Tensor[(2, 16), float32] span=from_string:5:20 */;
+  %1 = nn.dense(%x, %w2, units=None) /* ty=Tensor[(2, 8), float32] span=from_string:6:20 */;
+  %2 = expand_dims(%0, axis=2) /* ty=Tensor[(2, 16, 1), float32] span=from_string:7:4 */;
+  %3 = expand_dims(%1, axis=2) /* ty=Tensor[(2, 8, 1), float32] span=from_string:7:8 */;
+  (%2, %3) /* ty=(Tensor[(2, 16, 1), float32], Tensor[(2, 8, 1), float32]) span=from_string:3:3 */
+}

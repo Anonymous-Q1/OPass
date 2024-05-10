@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2, 7), float64], %pad_width: Tensor[(2, 2), int32]) {
+  dyn.nn.pad(%x, %pad_width, 4f, pad_width=[])
+}

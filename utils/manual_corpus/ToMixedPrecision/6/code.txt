@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2, 5), float32], %w: Tensor[(4, 5), float32]) {
+  nn.dense(%x, %w, units=4)
+}

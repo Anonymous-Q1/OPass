@@ -1,0 +1,50 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(4, 4, 10, 10), float32]) {
+  multiply(%x, meta[relay.Constant][0])
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAABAAAAAIgAQACAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAACAAAAAAAAABAAAAAAAAAA4acXP9YbMj9rBz4/x/pgPw=="
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

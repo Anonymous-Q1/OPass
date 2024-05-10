@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 128, 768), int8]) {
+  %0 = qnn.dequantize(%x, 2f, -12);
+  %1 = nn.adaptive_avg_pool1d(%0, output_size=[1]);
+  qnn.quantize(%1, 0.5f, 10, out_dtype="int8")
+}

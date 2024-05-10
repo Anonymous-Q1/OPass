@@ -1,0 +1,33 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 16, 64, 64), float32] /* ty=Tensor[(1, 16, 64, 64), float32] */, %w: Tensor[(16, 16, 3, 3), float32] /* ty=Tensor[(16, 16, 3, 3), float32] */, %w1: Tensor[(16, 16, 3, 3), float32] /* ty=Tensor[(16, 16, 3, 3), float32] */, %w2: Tensor[(16, 32, 3, 3), float32] /* ty=Tensor[(16, 32, 3, 3), float32] */, %w3: Tensor[(16, 32, 3, 3), float32] /* ty=Tensor[(16, 32, 3, 3), float32] */) -> Tensor[(1, 32, 64, 64), float32] {
+  %4 = fn (%p03: Tensor[(1, 16, 64, 64), float32] /* ty=Tensor[(1, 16, 64, 64), float32] */, %p13: Tensor[(16, 16, 3, 3), float32] /* ty=Tensor[(16, 16, 3, 3), float32] */, Primitive=1) -> Tensor[(1, 16, 64, 64), float32] {
+    %3 = nn.conv2d(%p03, %p13, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+    nn.relu(%3) /* ty=Tensor[(1, 16, 64, 64), float32] */
+  } /* ty=fn (Tensor[(1, 16, 64, 64), float32], Tensor[(16, 16, 3, 3), float32]) -> Tensor[(1, 16, 64, 64), float32] */;
+  %6 = fn (%p04: Tensor[(1, 16, 64, 64), float32] /* ty=Tensor[(1, 16, 64, 64), float32] */, %p14: Tensor[(16, 16, 3, 3), float32] /* ty=Tensor[(16, 16, 3, 3), float32] */, Primitive=1) -> Tensor[(1, 16, 64, 64), float32] {
+    %5 = nn.conv2d(%p04, %p14, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+    nn.relu(%5) /* ty=Tensor[(1, 16, 64, 64), float32] */
+  } /* ty=fn (Tensor[(1, 16, 64, 64), float32], Tensor[(16, 16, 3, 3), float32]) -> Tensor[(1, 16, 64, 64), float32] */;
+  %7 = %4(%x, %w) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+  %8 = %6(%x, %w1) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+  %9 = fn (%p02: Tensor[(1, 16, 64, 64), float32] /* ty=Tensor[(1, 16, 64, 64), float32] */, %p12: Tensor[(1, 16, 64, 64), float32] /* ty=Tensor[(1, 16, 64, 64), float32] */, Primitive=1) -> Tensor[(1, 32, 64, 64), float32] {
+    %2 = (%p02, %p12) /* ty=(Tensor[(1, 16, 64, 64), float32], Tensor[(1, 16, 64, 64), float32]) */;
+    concatenate(%2, axis=1) /* ty=Tensor[(1, 32, 64, 64), float32] */
+  } /* ty=fn (Tensor[(1, 16, 64, 64), float32], Tensor[(1, 16, 64, 64), float32]) -> Tensor[(1, 32, 64, 64), float32] */;
+  %10 = %9(%7, %8) /* ty=Tensor[(1, 32, 64, 64), float32] */;
+  %11 = fn (%p01: Tensor[(1, 32, 64, 64), float32] /* ty=Tensor[(1, 32, 64, 64), float32] */, %p11: Tensor[(16, 32, 3, 3), float32] /* ty=Tensor[(16, 32, 3, 3), float32] */, Primitive=1) -> Tensor[(1, 16, 64, 64), float32] {
+    %1 = nn.conv2d(%p01, %p11, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+    nn.relu(%1) /* ty=Tensor[(1, 16, 64, 64), float32] */
+  } /* ty=fn (Tensor[(1, 32, 64, 64), float32], Tensor[(16, 32, 3, 3), float32]) -> Tensor[(1, 16, 64, 64), float32] */;
+  %13 = fn (%p05: Tensor[(1, 32, 64, 64), float32] /* ty=Tensor[(1, 32, 64, 64), float32] */, %p15: Tensor[(16, 32, 3, 3), float32] /* ty=Tensor[(16, 32, 3, 3), float32] */, Primitive=1) -> Tensor[(1, 16, 64, 64), float32] {
+    %12 = nn.conv2d(%p05, %p15, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3]) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+    nn.relu(%12) /* ty=Tensor[(1, 16, 64, 64), float32] */
+  } /* ty=fn (Tensor[(1, 32, 64, 64), float32], Tensor[(16, 32, 3, 3), float32]) -> Tensor[(1, 16, 64, 64), float32] */;
+  %14 = %11(%10, %w2) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+  %15 = %13(%10, %w3) /* ty=Tensor[(1, 16, 64, 64), float32] */;
+  %16 = fn (%p0: Tensor[(1, 16, 64, 64), float32] /* ty=Tensor[(1, 16, 64, 64), float32] */, %p1: Tensor[(1, 16, 64, 64), float32] /* ty=Tensor[(1, 16, 64, 64), float32] */, Primitive=1) -> Tensor[(1, 32, 64, 64), float32] {
+    %0 = (%p0, %p1) /* ty=(Tensor[(1, 16, 64, 64), float32], Tensor[(1, 16, 64, 64), float32]) */;
+    concatenate(%0, axis=1) /* ty=Tensor[(1, 32, 64, 64), float32] */
+  } /* ty=fn (Tensor[(1, 16, 64, 64), float32], Tensor[(1, 16, 64, 64), float32]) -> Tensor[(1, 32, 64, 64), float32] */;
+  %16(%14, %15) /* ty=Tensor[(1, 32, 64, 64), float32] */
+} /* ty=fn (Tensor[(1, 16, 64, 64), float32], Tensor[(16, 16, 3, 3), float32], Tensor[(16, 16, 3, 3), float32], Tensor[(16, 32, 3, 3), float32], Tensor[(16, 32, 3, 3), float32]) -> Tensor[(1, 32, 64, 64), float32] */

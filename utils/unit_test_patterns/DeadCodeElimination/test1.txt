@@ -1,0 +1,25 @@
+#[version = "0.0.5"]
+def @main(%d: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] */) -> (Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) {
+  %0 = fn (%d1) {
+    %d1
+  };
+  let %x_17 = ref(%0);
+  %1 = zeros_like(%d);
+  %2 = ref(%1);
+  let %x_18 = (%d, %2);
+  %3 = fn (%d1, %bp){
+    %d1
+  } /* ty=fn (Tensor[(10, 10), float32]) -> Tensor[(10, 10), float32] */;
+  let %x_19 = %3(%x_18, %x_17);
+  %4 = %x_19.1;
+  %5 = %x_19.0;
+  %6 = ones_like(%5);
+  let %x_20 = ref_write(%4, %6);
+  %7 = ref_read(%x_17);
+  let %x_21 = %7(%1);
+  %8 = %x_18.1;
+  %9 = ref_read(%8);
+  %10 = %x_19.0;
+  %11 = (%9,);
+  (%10, %11)
+}

@@ -1,0 +1,11 @@
+#[version = "0.0.5"]
+def @main() {
+    let %f = fn (%n: int, %data: int) -> int {
+        if (%n == 0) {
+            %data
+        } else {
+            %f(%n - 1, log(%data))
+        }
+    };
+    ()
+}

@@ -1,0 +1,1 @@
+[('SimplifyInference', {}), ('FuseOps', {'fuse_opt_level': 4})]

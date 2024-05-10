@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 3, 224, 224), int8], %w: Tensor[(16, 3, 5, 5), int8]) {
+  %0 = qnn.dequantize(%x, 2f, 0);
+  %1 = qnn.dequantize(%w, 0.5f, 0);
+  %2 = nn.conv2d(%0, %1, padding=[0, 0, 0, 0], kernel_size=[5, 5]);
+  qnn.quantize(%2, 1f, 0, out_dtype="int8")
+}

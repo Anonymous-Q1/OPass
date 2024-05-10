@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(3, 3), float32], %d: Tensor[(3), float32]) {
+  %0 = ones_like(%d);
+  broadcast_to_like(%0, %x)
+}

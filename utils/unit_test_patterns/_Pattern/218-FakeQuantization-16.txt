@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 3, 3, 3), int8]) {
+  %0 = qnn.dequantize(%x, 0.626659f, -128);
+  %1 = sqrt(%0);
+  qnn.quantize(%1, 0.13107f, -128, out_dtype="int8")
+}

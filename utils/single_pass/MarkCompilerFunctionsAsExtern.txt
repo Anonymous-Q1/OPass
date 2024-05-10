@@ -1,0 +1,1 @@
+[('MarkCompilerFunctionsAsExtern', {'compiler_filter': ''})]

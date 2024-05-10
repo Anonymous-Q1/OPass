@@ -1,0 +1,55 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2, 2, 10, 10, 10, 16), float32], %weight, %out_bias: Tensor[(64), float32]) {
+  %0 = nn.conv3d(%x, %weight, padding=[1, 1, 1, 1, 1, 1], channels=64, kernel_size=[3, 3, 3], data_layout="NCDHW16c", kernel_layout="OIDHW1i16o");
+  %1 = reshape(%out_bias, newshape=[1, 4, 1, 1, 1, 16]);
+  %2 = add(%0, %1);
+  %3 = nn.relu(%2);
+  %4 = reshape(meta[relay.Constant][0], newshape=[1, 4, 1, 1, 1, 16]);
+  multiply(%3, %4)
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAQAAAAIgAQBAAAAAAAAAAAABAAAAAAAA0NkZP0mccz/LCRA/HKMRPweqDD+wLX4/TlJRP4H/ST+Y42A/iwlFP5AGVT+PaTw/jI4NP4IUbD+TZw4/t+UtP3dfYT9h3nw/BaJcPzbSfj8SmnU/PTxrP3HYXz9/mAg/5283P2YWfD+KmFE/kWxwP1A2JT8veXU/CEARPyjbSj9mnCM/jp4fP8Z0Kj9JfjA/+IoKP1LGej+k01o/R+9mPzBEWD/vwFE/1bovP2fZFj8MjXE/VbVXP/wVfT+Mulw/n/9QP2AnUz8wq2I/oAo2P3CHSj/RT3Y/dLR3PwFPRj+qS1A/+EAmPwHpGD9CM2Y/SqkeP+U2cz8EInQ/gFh3Pw=="
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

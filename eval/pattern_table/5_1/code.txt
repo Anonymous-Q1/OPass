@@ -1,0 +1,23 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */) -> Tensor[(1, 16), float32] {
+  %2 = fn (%x1: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */) -> Tensor[(1, 16), float32] {
+    %1 = fn (%p01: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, Primitive=1) -> Tensor[(1, 16), float32] {
+      %0 = nn.relu(%p01) /* ty=Tensor[(1, 16), float32] */;
+      add(%0, 1f /* ty=float32 */) /* ty=Tensor[(1, 16), float32] */
+    } /* ty=fn (Tensor[(1, 16), float32]) -> Tensor[(1, 16), float32] */;
+    %1(%x1) /* ty=Tensor[(1, 16), float32] */
+  } /* ty=fn (Tensor[(1, 16), float32]) -> Tensor[(1, 16), float32] */;
+  %5 = fn (%x2: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */) -> Tensor[(1, 16), float32] {
+    %4 = fn (%p02: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, Primitive=1) -> Tensor[(1, 16), float32] {
+      %3 = nn.relu(%p02) /* ty=Tensor[(1, 16), float32] */;
+      add(%3, 1f /* ty=float32 */) /* ty=Tensor[(1, 16), float32] */
+    } /* ty=fn (Tensor[(1, 16), float32]) -> Tensor[(1, 16), float32] */;
+    %4(%x2) /* ty=Tensor[(1, 16), float32] */
+  } /* ty=fn (Tensor[(1, 16), float32]) -> Tensor[(1, 16), float32] */;
+  %6 = %2(%x) /* ty=Tensor[(1, 16), float32] */;
+  %7 = %5(%x) /* ty=Tensor[(1, 16), float32] */;
+  %8 = fn (%p0: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, %p1: Tensor[(1, 16), float32] /* ty=Tensor[(1, 16), float32] */, Primitive=1) -> Tensor[(1, 16), float32] {
+    add(%p0, %p1) /* ty=Tensor[(1, 16), float32] */
+  } /* ty=fn (Tensor[(1, 16), float32], Tensor[(1, 16), float32]) -> Tensor[(1, 16), float32] */;
+  %8(%6, %7) /* ty=Tensor[(1, 16), float32] */
+}

@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 383, 128), int8]) {
+  %0 = qnn.dequantize(%x, 1f, 10);
+  %1 = nn.pad(%0, 0f, pad_width=[[0, 0], [0, 1], [0, 0]]);
+  qnn.quantize(%1, 1f, 10, out_dtype="int8")
+}

@@ -1,0 +1,26 @@
+{
+"Origin": [
+0.0631561279296875,
+"None"
+],
+"Default": [
+0.04206085205078125,
+"['RemoveUnusedFunctions', 'ToBasicBlockNormalForm', 'Legalize', 'SimplifyInference', 'EliminateCommonSubexpr', 'CombineParallelConv2D', 'CombineParallelDense', 'CombineParallelBatchMatmul', 'FoldConstant', 'FoldScaleAxis', 'SimplifyExpr', 'CanonicalizeCast', 'CanonicalizeOps', 'FlattenAtrousConv', 'AlterOpLayout', 'SimplifyExpr', 'FastMath', 'FoldConstant', 'SplitArgs', 'FuseOps']"
+],
+"Greedy": [
+0.038623809814453125,
+"['FuseOps', 'ToMixedPrecision']"
+],
+"Beam": [
+0.03420257568359375,
+"['ToMixedPrecision', 'FuseOps']"
+],
+"SA": [
+0.03260040283203125,
+"['SimplifyExpr', 'FoldExplicitPadding', 'ToMixedPrecision', 'PartitionGraph', 'FuseOps', 'FoldScaleAxis', 'MergeCompilerRegions', 'InferType', 'CombineParallelDense', 'EtaExpand', 'DefuseOps', 'DynamicToStatic', 'FuseOps', 'MarkCompilerFunctionsAsExtern', 'SimplifyExpr', 'FuseOps', 'Legalize', 'ToGraphNormalForm', 'PartitionGraph', 'Inline']"
+],
+"Transfer": [
+0.03168487548828125,
+"['EliminateCommonSubexpr', 'AlterOpLayout', 'ToANormalForm', 'ToMixedPrecision', 'ToGraphNormalForm', 'FuseOps']"
+]
+}

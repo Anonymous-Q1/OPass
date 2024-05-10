@@ -1,0 +1,20 @@
+#[version = "0.0.5"]
+def @lifted_name7197441260324353841(%x: Tensor[(2), float32], Closure=1) -> fn (int32, Tensor[(2), float32]) -> Tensor[(2), float32] {
+  fn (%i: int32 /* ty=int32 span=from_string:6:16 */, %s: Tensor[(2), float32] /* ty=Tensor[(2), float32] span=from_string:10:7 */) -> Tensor[(2), float32] {
+    %0 = less(%i, 10 /* ty=int32 span=from_string:4:22 */) /* ty=bool span=from_string:5:9 */;
+    if (%0) {
+      %1 = add(%i, 1 /* ty=int32 span=from_string:6:22 */) /* ty=int32 span=from_string:8:19 */;
+      %2 = add(%s, %x) /* ty=Tensor[(2), float32] span=from_string:8:23 */;
+      %3 = @lifted_name7197441260324353841(%x);
+      %3(%1, %2)
+    } else {
+      %s
+    }
+  } /* ty=fn (int32, Tensor[(2), float32]) -> Tensor[(2), float32] span=from_string:3:3 */
+}
+
+def @main(%x1: Tensor[(2), float32] /* ty=Tensor[(2), float32] span=from_string:7:20 */) -> Tensor[(2), float32] {
+  let %while_loop: fn (int32, Tensor[(2), float32]) -> Tensor[(2), float32] /* ty=fn (int32, Tensor[(2), float32]) -> Tensor[(2), float32] span=from_string:14:3 */ = @lifted_name7197441260324353841(%x1);
+  %4 = zeros(shape=[2], dtype="float32") /* ty=Tensor[(2), float32] span=from_string:14:18 */;
+  %while_loop(0 /* ty=int32 span=from_string:14:16 */, %4) /* ty=Tensor[(2), float32] span=from_string:14:3 */
+}

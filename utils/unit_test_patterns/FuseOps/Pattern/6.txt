@@ -1,0 +1,14 @@
+#[version = "0.0.5"]
+def @main(%x: int64, %y: int64) {
+  %0 = greater(%x, %y);
+  %1 = if (%0) {
+    fn () {
+      %x
+    }
+  } else {
+    fn () {
+      %y
+    }
+  };
+  %1()
+}

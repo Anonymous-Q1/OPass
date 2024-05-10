@@ -1,0 +1,35 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 128, 56, 56), float32], %x1: Tensor[(64, 128, 3, 3), float32]) {
+    %0 = ones_like(%x0);
+    %1 = add(%x0, %0);
+    %2 = layout_transform(%x0, src_layout="NCHW", dst_layout="NCHW4c");
+    %3 = layout_transform(%2, src_layout="NCHW4c", dst_layout="NCHW");
+    %4 = nn.relu(%3);
+    %5 = nn.conv2d(%4, %x1, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=64, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %6 = nn.relu(%5);
+    %7 = layout_transform(%2, src_layout="NCHW4c", dst_layout="NCHW8c");
+    %8 = layout_transform(%7, src_layout="NCHW8c", dst_layout="NCHW4c");
+    %9 = nn.relu(%8);
+    %10 = add(%4, 1.0f);
+    %11 = exp(%10);
+    %12 = squeeze(%11, axis=None);
+    %13 = add(%5, %5);
+    %14 = transpose(%13, axes=[0, 3, 1, 2]);
+    %15 = layout_transform(%14, src_layout="NCHW", dst_layout="NCHW4c");
+    %16 = nn.relu(%15);
+    %17 = layout_transform(%16, src_layout="NCHW4c", dst_layout="NCHW");
+    %18 = transpose(%17, axes=[0, 2, 3, 1]);
+    %19 = layout_transform(%17, src_layout="NCHW", dst_layout="NHWC");
+    %20 = layout_transform(%19, src_layout="NHWC", dst_layout="CHWN");
+    %21 = nn.relu(%20);
+    %22 = transpose(%14, axes=[0, 2, 3, 1]);
+    %23 = layout_transform(%22, src_layout="NHWC", dst_layout="HWCN");
+    %24 = transpose(%23, axes=[3, 0, 1, 2]);
+    %25 = transpose(%24, axes=[0, 3, 1, 2]);
+    %26 = layout_transform(%25, src_layout="NCHW", dst_layout="NCHW4c");
+    %27 = nn.relu(%26);
+    %28 = layout_transform(%27, src_layout="NCHW4c", dst_layout="NCHW");
+    %29 = transpose(%28, axes=[0, 2, 3, 1]);
+    %30 = (%1, %6, %9, %12, %18, %21, %29);
+    %30
+}

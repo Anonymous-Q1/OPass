@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(4, 3, 4), float32], %w: Tensor[(4, 4, 3), float16]) {
+  cast_like(%x, %w)
+}

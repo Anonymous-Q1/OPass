@@ -1,0 +1,25 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] */) -> (Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) {
+  %0 = fn () -> () {
+    () /* ty=() */
+  } /* ty=fn () -> () */;
+  let %x_0: ref(fn () -> ()) /* ty=ref(fn () -> ()) */ = ref(%0);
+  %1 = zeros_like(%x) /* ty=Tensor[(10, 10), float32] */;
+  %2 = ref(%1);
+  let %x_1: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */ = (%x, %2) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */;
+  %3 = fn (%x1: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */, %bp: ref(fn () -> ()) /* ty=ref(fn () -> ()) */) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) {
+    %x1
+  } /* ty=fn ((Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])), ref(fn () -> ())) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */;
+  let %x_2: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */ = %3(%x_1, %x_0) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */;
+  %4 = %x_2.1 /* ty=ref(Tensor[(10, 10), float32]) */;
+  %5 = %x_2.0 /* ty=Tensor[(10, 10), float32] */;
+  %6 = ones_like(%5) /* ty=Tensor[(10, 10), float32] */;
+  let %x_3: () /* ty=() */ = ref_write(%4, %6);
+  %7 = ref_read(%x_0);
+  let %x_4: () /* ty=() */ = %7() /* ty=() */;
+  %8 = %x_1.1 /* ty=ref(Tensor[(10, 10), float32]) */;
+  %9 = ref_read(%8);
+  %10 = %x_2.0 /* ty=Tensor[(10, 10), float32] */;
+  %11 = (%9,) /* ty=(Tensor[(10, 10), float32],) */;
+  (%10, %11) /* ty=(Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) */
+}

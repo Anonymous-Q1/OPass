@@ -1,0 +1,8 @@
+#[version = "0.0.5"]
+def @main(%a: Tensor[(1, 4, 2), int8], %b: Tensor[(1, 4, 2), int8]) {
+  %0 = qnn.dequantize(%a, 2f, 0);
+  %1 = qnn.dequantize(%b, 6f, 0);
+  %2 = nn.batch_matmul(%0, %1, transpose_b=True);
+  %3 = add(%2, 1f);
+  qnn.quantize(%3, 1f, 0, out_dtype="int8")
+}

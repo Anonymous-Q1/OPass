@@ -1,0 +1,27 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 16, 64, 64), float32]) {
+  %0 = add(%x, 1f);
+  %1 = add(%x, 1f);
+  %2 = add(%x, 1f);
+  %3 = (%0, %1, %2);
+  %4 = concatenate(%3, axis=1);
+  %5 = add(%x, 1f);
+  %6 = add(%x, 1f);
+  %7 = add(%x, 1f);
+  %8 = (%5, %6, %7);
+  %9 = concatenate(%8, axis=1);
+  %10 = add(%x, 1f);
+  %11 = add(%x, 1f);
+  %12 = add(%x, 1f);
+  %13 = (%10, %11, %12);
+  %14 = concatenate(%13, axis=1);
+  %15 = add(%4, 1f);
+  %16 = add(%9, 1f);
+  %17 = add(%14, 1f);
+  %18 = (%15, %16, %17);
+  %19 = concatenate(%18, axis=1);
+  %20 = nn.max_pool2d(%19, pool_size=[2, 2], strides=[2, 2], padding=[0, 0, 0, 0]);
+  %21 = add(%20, 1f);
+  %22 = add(%21, 1f);
+  (%21, %22)
+}

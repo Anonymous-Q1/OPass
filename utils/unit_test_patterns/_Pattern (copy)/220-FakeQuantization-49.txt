@@ -1,0 +1,58 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 2, 4), float32]) {
+  %0 = qnn.quantize(%x, 17f, 0, out_dtype="int8");
+  %1 = qnn.dequantize(%0, 17f, 0);
+  %2 = reshape(%1, newshape=[1, 4, 2]);
+  %3 = qnn.quantize(%2, 10f, 0, out_dtype="int8");
+  %4 = qnn.quantize(meta[relay.Constant][0], 1f, 8, out_dtype="int8");
+  %5 = qnn.dequantize(%3, 10f, 0);
+  %6 = qnn.dequantize(%4, 4f, 9);
+  %7 = nn.batch_matmul(%5, %6, transpose_b=True);
+  add(%7, 5f)
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAwAAAAIgAQABAAAAAAAAAAQAAAAAAAAAAgAAAAAAAAAgAAAAAAAAAOP23T0uZFE/Y75zP/ENIj9GOCY/HoBxP7VcOj9U/CU+"
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

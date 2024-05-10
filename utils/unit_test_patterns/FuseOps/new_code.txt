@@ -1,0 +1,8 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(16, 16), float32] /* ty=Tensor[(16, 16), float32] span=from_string:3:19 */) -> Tensor[(16, 16), float16] {
+  %1 = fn (%p0: Tensor[(16, 16), float32] /* ty=Tensor[(16, 16), float32] */, Primitive=1) -> Tensor[(16, 16), float16] {
+    %0 = nn.softmax(%p0) /* ty=Tensor[(16, 16), float32] span=from_string:4:8 */;
+    cast(%0, dtype="float16") /* ty=Tensor[(16, 16), float16] span=from_string:3:3 */
+  } /* ty=fn (Tensor[(16, 16), float32]) -> Tensor[(16, 16), float16] */;
+  %1(%x) /* ty=Tensor[(16, 16), float16] */
+}

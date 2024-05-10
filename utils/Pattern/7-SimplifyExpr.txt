@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(3, 4, 5), int8], %y: Tensor[(3, 4), int64], %z: Tensor[(3), float32]) {
+  %0 = cast(%x, dtype="int16");
+  %1 = cast(%0, dtype="int32");
+  %2 = cast_like(%1, %y);
+  cast_like(%2, %z)
+}

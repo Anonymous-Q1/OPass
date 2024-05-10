@@ -1,0 +1,43 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(10, 20), float32], %x1: Tensor[(12, 20), float32], %x2: Tensor[(12,), float32], %x3: Tensor[(1,), float32], %x4: Tensor[(24, 20), float32], %x5: Tensor[(24,), float32], %x6: Tensor[(1,), float32], %x7: Tensor[(70, 20), float32], %x8: Tensor[(12, 20), float32], %x9: Tensor[(12,), float32], %x10: Tensor[(12,), float32], %x11: Tensor[(1,), float32], %x12: Tensor[(1,), float32], %x13: Tensor[(45, 24), float32], %x14: Tensor[(1320,), float32]) {
+    %0 = add(1.0f, 1.0f);
+    %1 = add(%x0, 1.0f);
+    %2 = annotation.stop_fusion(%1);
+    %3 = add(%0, %2);
+    %4 = ones_like(%3);
+    %5 = add(%3, %4);
+    %6 = exp(%2);
+    %7 = nn.dense(%6, %x1, units=None, out_dtype="");
+    %8 = add(%7, %x2);
+    %9 = multiply(%8, %x3);
+    %10 = reshape(%9, newshape=[1, 1, 120], allowzero=0);
+    %11 = nn.dense(%6, %x4, units=None, out_dtype="");
+    %12 = add(%11, %x5);
+    %13 = multiply(%12, %x6);
+    %14 = reshape(%13, newshape=[1, 1, 240], allowzero=0);
+    %15 = (%10, %14);
+    %16 = nn.dense(%x7, %x1, units=None, out_dtype="");
+    %17 = add(%16, %x9);
+    %18 = multiply(%17, %x11);
+    %19 = reshape(%18, newshape=[1, 1, -1], allowzero=0);
+    %20 = nn.dense(%x7, %x8, units=None, out_dtype="");
+    %21 = add(%20, %x10);
+    %22 = multiply(%21, %x12);
+    %23 = reshape(%22, newshape=[1, 1, -1], allowzero=0);
+    %24 = (%19, %23);
+    %25 = nn.relu(%x11);
+    %26 = add(%25, 1.0f);
+    %27 = nn.relu(%x11);
+    %28 = add(%27, 1.0f);
+    %29 = add(%26, %28);
+    %30 = ones_like(%x3);
+    %31 = add(%x3, %30);
+    %32 = ones(shape=[1], dtype="float32");
+    %33 = multiply(%32, %17);
+    %34 = (%11, %x13);
+    %35 = concatenate(%34, axis=0);
+    %36 = shape_of(%x14, dtype="int32");
+    %37 = dyn.reshape(%35, %36, newshape=[], allowzero=0);
+    %38 = (%5, %15, %24, %29, %31, %33, %37);
+    %38
+}

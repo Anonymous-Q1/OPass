@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(3, 4), int64]) {
+  %0 = cast(%x, dtype="bool");
+  cast(%0, dtype="int32")
+}

@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x1: Tensor[(20, 20), float32], %x2: Tensor[(20, 20), float32]) {
+  %0 = subtract(%x1, %x2);
+  multiply(%0, %x2)
+}

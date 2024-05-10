@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x1: Tensor[(10, 5), float32], %y1: Tensor[(1, 5), float32]) {
+  %0 = fn (%x2: Tensor[(10, 5), float32], %y2: Tensor[(1, 5), float32]) {
+    add(%x2, %y2)
+  };
+  %0(%x1, %y1)
+}

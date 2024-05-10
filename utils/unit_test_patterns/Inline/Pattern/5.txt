@@ -1,0 +1,15 @@
+#[version = "0.0.5"]
+def @main(%i: int32) {
+  @sum_up(%i)
+}
+
+def @sum_up(%i1: int32, Inline=1) -> int32 {
+  %0 = equal(%i1, 0);
+  if (%0) {
+    %i1
+  } else {
+    %1 = subtract(%i1, 1);
+    %2 = @sum_up(%1);
+    add(%2, %i1)
+  }
+}

@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 16, 32, 32), int32], %scale_h: float32, %scale_w: float32) {
+  dyn.nn.upsampling(%x, %scale_h, %scale_w, scale_h=0f, scale_w=0f)
+}

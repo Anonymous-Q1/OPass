@@ -1,0 +1,43 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 16, 16, 16), float32], %x1: Tensor[(64, 16, 3, 3), float32], %x2: Tensor[(64, 64, 3, 3), float32], %x3: Tensor[(64, 16, 3, 3), float32]) {
+    %0 = exp(%x0);
+    %1 = zeros_like(%0);
+    %2 = nn.conv2d(%1, %x1, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=64, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %3 = nn.relu(%2);
+    %4 = add(%3, 1.0f);
+    %5 = nn.relu(%2);
+    %6 = add(%5, 1.0f);
+    %7 = add(%4, %6);
+    %8 = nn.relu(%3);
+    %9 = transpose(%8, axes=None);
+    %10 = transpose(%9, axes=None);
+    %11 = transpose(%10, axes=[0, 2, -1, 1]);
+    %12 = transpose(%11, axes=None);
+    %13 = transpose(%12, axes=None);
+    %14 = add(%0, %1);
+    %15 = transpose(%14, axes=[0, 2, 3, 1]);
+    %16 = layout_transform(%15, src_layout="NHWC", dst_layout="HWCN");
+    %17 = transpose(%16, axes=[3, 0, 1, 2]);
+    %18 = nn.relu(%2);
+    %19 = multiply(%x2, 2.0f);
+    %20 = nn.conv2d(%18, %19, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=64, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %21 = add(0.0f, %20);
+    %22 = nn.relu(%21);
+    %23 = multiply(0.0f, 0.0f);
+    %24 = squeeze(%21, axis=None);
+    %25 = add(%24, 1.0f);
+    %26 = squeeze(%24, axis=None);
+    %27 = add(%26, 1.0f);
+    %28 = add(%27, 1.0f);
+    %29 = add(%24, 1.0f);
+    %30 = (%25, %28, %29);
+    %31 = concatenate(%30, axis=1);
+    %32 = squeeze(%31, axis=None);
+    %33 = add(%32, 1.0f);
+    %34 = multiply(%x3, 2.0f);
+    %35 = nn.conv2d(%12, %34, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=64, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %36 = add(0.0f, %35);
+    %37 = nn.relu(%36);
+    %38 = (%7, %13, %17, %22, %23, %33, %37);
+    %38
+}

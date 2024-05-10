@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 64, 56, 56), float32], %y: Tensor[(1, 64, 56, 20), float32], %z: Tensor[(1, 64, 56, 10), float32]) {
+  %0 = (%x, %y, %z);
+  concatenate(%0, axis=3)
+}

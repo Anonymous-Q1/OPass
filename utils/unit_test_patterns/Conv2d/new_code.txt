@@ -1,0 +1,19 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 4, 16, 16), float32] /* ty=Tensor[(1, 4, 16, 16), float32] span=from_string:4:18 */, %w: Tensor[(2, 4, 1, 1), float32] /* ty=Tensor[(2, 4, 1, 1), float32] span=from_string:16:24 */) -> Tensor[(1, 4, 16, 16), float32] {
+  %0 = nn.conv2d(%x, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:5:9 */;
+  %1 = nn.conv2d(%x, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:5:13 */;
+  %2 = (%0, %1) /* ty=(Tensor[(1, 2, 16, 16), float32], Tensor[(1, 2, 16, 16), float32]) span=from_string:6:20 */;
+  %3 = concatenate(%2, axis=1) /* ty=Tensor[(1, 4, 16, 16), float32] span=from_string:8:18 */;
+  %4 = nn.conv2d(%3, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:9:9 */;
+  %5 = nn.conv2d(%3, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:9:13 */;
+  %6 = (%4, %5) /* ty=(Tensor[(1, 2, 16, 16), float32], Tensor[(1, 2, 16, 16), float32]) span=from_string:10:20 */;
+  %7 = concatenate(%6, axis=1) /* ty=Tensor[(1, 4, 16, 16), float32] span=from_string:12:18 */;
+  %8 = nn.conv2d(%7, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:13:10 */;
+  %9 = nn.conv2d(%7, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:13:14 */;
+  %10 = (%8, %9) /* ty=(Tensor[(1, 2, 16, 16), float32], Tensor[(1, 2, 16, 16), float32]) span=from_string:14:21 */;
+  %11 = concatenate(%10, axis=1) /* ty=Tensor[(1, 4, 16, 16), float32] span=from_string:16:19 */;
+  %12 = nn.conv2d(%11, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:17:10 */;
+  %13 = nn.conv2d(%11, %w, padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 2, 16, 16), float32] span=from_string:17:15 */;
+  %14 = (%12, %13) /* ty=(Tensor[(1, 2, 16, 16), float32], Tensor[(1, 2, 16, 16), float32]) span=from_string:18:15 */;
+  concatenate(%14, axis=1) /* ty=Tensor[(1, 4, 16, 16), float32] span=from_string:3:3 */
+}

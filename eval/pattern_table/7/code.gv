@@ -1,0 +1,32 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 3, 224, 224), int8]"]
+	con0 [label="con0: float32"]
+	con1 [label="con1: int32"]
+	opr0 [label="{{<i0>Tensor[(1, 3, 224, 224), int8]|<i1>float32|<i2>int32}|qnn.dequantize\naxis=-1|{<o0>Tensor[(1, 3, 224, 224), float32]}}"]
+	in0 -> opr0:i0
+	con0 -> opr0:i1
+	con1 -> opr0:i2
+	opr1 [label="{{<i0>Tensor[(1, 3, 224, 224), float32]}|transpose\naxes=[0, 1, 2, 3]|{<o0>Tensor[(1, 3, 224, 224), float32]}}"]
+	opr0:o0 -> opr1:i0
+	in1 [label="in1: Tensor[(16, 3, 5, 5), int8]"]
+	con2 [label="con2: float32"]
+	con3 [label="con3: int32"]
+	opr2 [label="{{<i0>Tensor[(16, 3, 5, 5), int8]|<i1>float32|<i2>int32}|qnn.dequantize\naxis=-1|{<o0>Tensor[(16, 3, 5, 5), float32]}}"]
+	in1 -> opr2:i0
+	con2 -> opr2:i1
+	con3 -> opr2:i2
+	opr3 [label="{{<i0>Tensor[(1, 3, 224, 224), float32]|<i1>Tensor[(16, 3, 5, 5), float32]}|nn.conv2d\nstrides=[1, 1]\npadding=[0, 0, 0, 0]\ndilation=[1, 1]\ngroups=1\nchannels=None\nkernel_size=[5, 5]\ndata_layout=\"NCHW\"\nkernel_layout=\"OIHW\"\nout_layout=\"\"\nout_dtype=\"\"|{<o0>Tensor[(1, 16, 220, 220), float32]}}"]
+	opr1:o0 -> opr3:i0
+	opr2:o0 -> opr3:i1
+	opr4 [label="{{<i0>Tensor[(1, 16, 220, 220), float32]}|layout_transform\nsrc_layout=\"NCHW\"\ndst_layout=\"NCHW\"|{<o0>Tensor[(1, 16, 220, 220), float32]}}"]
+	opr3:o0 -> opr4:i0
+	con4 [label="con4: float32"]
+	con5 [label="con5: int32"]
+	opr5 [label="{{<i0>Tensor[(1, 16, 220, 220), float32]|<i1>float32|<i2>int32}|qnn.quantize\nout_dtype=\"int8\"\naxis=-1|{<o0>Tensor[(1, 16, 220, 220), int8]}}"]
+	opr4:o0 -> opr5:i0
+	con4 -> opr5:i1
+	con5 -> opr5:i2
+	out0 [label="out0: Tensor[(1, 16, 220, 220), int8]"]
+	opr5:o0 -> out0
+}

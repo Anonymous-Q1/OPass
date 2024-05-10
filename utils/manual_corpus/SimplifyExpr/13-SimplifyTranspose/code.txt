@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 2, 4, 3), float32]) {
+  %0 = layout_transform(%x, src_layout="NCHW", dst_layout="NCWH");
+  layout_transform(%0, src_layout="NCWH", dst_layout="CNHW")
+}

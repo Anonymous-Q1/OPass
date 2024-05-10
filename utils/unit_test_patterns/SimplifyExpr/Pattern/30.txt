@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(4, 32, 1, 1), int8]) {
+  %0 = qnn.dequantize(%x, 2f, 0);
+  argsort(%0, axis=1, dtype="int32")
+}

@@ -1,0 +1,25 @@
+#[version = "0.0.5"]
+def @main(%d: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] span=from_string:9:16 */) -> (Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) {
+  %0 = fn (%d1: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] span=from_string:4:5 */) -> Tensor[(10, 10), float32] {
+    %d1
+  } /* ty=fn (Tensor[(10, 10), float32]) -> Tensor[(10, 10), float32] span=from_string:6:19 */;
+  let %x_17: ref(fn (Tensor[(10, 10), float32]) -> Tensor[(10, 10), float32]) /* ty=ref(fn (Tensor[(10, 10), float32]) -> Tensor[(10, 10), float32]) span=from_string:18:17 */ = ref(%0);
+  %1 = zeros_like(%d) /* ty=Tensor[(10, 10), float32] span=from_string:19:18 */;
+  %2 = ref(%1);
+  let %x_18: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) span=from_string:20:8 */ = (%d, %2) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) span=from_string:9:15 */;
+  %3 = fn (%d11: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) span=from_string:11:5 */, %bp: ref(fn (Tensor[(10, 10), float32]) -> Tensor[(10, 10), float32]) /* ty=ref(fn (Tensor[(10, 10), float32]) -> Tensor[(10, 10), float32]) */) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) {
+    %d11
+  } /* ty=fn ((Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])), ref(fn (Tensor[(10, 10), float32]) -> Tensor[(10, 10), float32])) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) span=from_string:13:15 */;
+  let %x_19: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) span=from_string:22:9 */ = %3(%x_18, %x_17) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) span=from_string:13:15 */;
+  %4 = %x_19.1 /* ty=ref(Tensor[(10, 10), float32]) span=from_string:17:25 */;
+  %5 = %x_19.0 /* ty=Tensor[(10, 10), float32] span=from_string:16:18 */;
+  %6 = ones_like(%5) /* ty=Tensor[(10, 10), float32] span=from_string:17:29 */;
+  let %x_20: () /* ty=() */ = ref_write(%4, %6);
+  %7 = ref_read(%x_17);
+  let %x_21: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] */ = %7(%1) /* ty=Tensor[(10, 10), float32] span=from_string:19:15 */;
+  %8 = %x_18.1 /* ty=ref(Tensor[(10, 10), float32]) span=from_string:21:17 */;
+  %9 = ref_read(%8);
+  %10 = %x_19.0 /* ty=Tensor[(10, 10), float32] span=from_string:24:4 */;
+  %11 = (%9,) /* ty=(Tensor[(10, 10), float32],) span=from_string:24:9 */;
+  (%10, %11) /* ty=(Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) span=from_string:24:3 */
+}

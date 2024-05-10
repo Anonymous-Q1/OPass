@@ -1,0 +1,56 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 16, 64, 64), float32], %x1: Tensor[(16, 16, 3, 3), float32], %x2: Tensor[(16, 16, 3, 3), float32], %x3: Tensor[(16, 32, 3, 3), float32], %x4: Tensor[(16, 32, 3, 3), float32]) {
+    %0 = nn.max_pool2d(%x0, pool_size=[2, 2], strides=[2, 2], dilation=[1, 1], padding=[0, 0, 0, 0], layout="NCHW", out_layout="", ceil_mode=0);
+    %1 = nn.upsampling(%0, scale_h=2.0f, scale_w=2.0f, layout="NCHW", method="nearest_neighbor", align_corners=0);
+    %2 = (%1, %x0);
+    %3 = concatenate(%2, axis=1);
+    %4 = add(%3, 1.0f);
+    %5 = tanh(%0);
+    %6 = nn.relu(%5);
+    %7 = transpose(%6, axes=[0, 2, 3, 1]);
+    %8 = transpose(%7, axes=[1, 2, 3, 0]);
+    %9 = transpose(%8, axes=[3, 2, 0, 1]);
+    %10 = layout_transform(%3, src_layout="NCHW", dst_layout="NCHW4c");
+    %11 = layout_transform(%10, src_layout="NCHW4c", dst_layout="NCHW");
+    %12 = nn.relu(%11);
+    %13 = nn.conv2d(%6, %x1, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=16, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %14 = nn.relu(%13);
+    %15 = nn.conv2d(%6, %x2, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=16, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %16 = nn.relu(%15);
+    %17 = (%14, %16);
+    %18 = concatenate(%17, axis=1);
+    %19 = nn.conv2d(%18, %x3, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=16, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %20 = nn.relu(%19);
+    %21 = nn.conv2d(%18, %x4, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=16, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %22 = nn.relu(%21);
+    %23 = (%20, %22);
+    %24 = concatenate(%23, axis=1);
+    %25 = layout_transform(%21, src_layout="NCHW", dst_layout="NHWC");
+    %26 = layout_transform(%25, src_layout="NHWC", dst_layout="CHWN");
+    %27 = nn.relu(%26);
+    %28 = nn.relu(%8);
+    %29 = add(%28, 1.0f);
+    %30 = nn.relu(%8);
+    %31 = add(%30, 1.0f);
+    %32 = add(%29, %31);
+    %33 = ones_like(1.0f);
+    %34 = add(1.0f, %33);
+    %35 = add(%29, 1.0f);
+    %36 = exp(%35);
+    %37 = squeeze(%36, axis=None);
+    %38 = multiply(%1, %1);
+    let %x5 = %38;
+    %39 = zeros_like(%1);
+    %40 = ones_like(%x5);
+    let %x6 = %40;
+    %41 = multiply(%x6, %1);
+    %42 = collapse_sum_like(%41, %1);
+    %43 = add(%39, %42);
+    %44 = multiply(%x6, %1);
+    %45 = collapse_sum_like(%44, %1);
+    %46 = add(%43, %45);
+    %47 = (%46,);
+    %48 = (%x5, %47);
+    %49 = (%4, %9, %12, %24, %27, %32, %34, %37, %48);
+    %49
+}

@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%d: int32 /* ty=int32 span=from_string:5:14 */, %b: int32 /* ty=int32 span=from_string:4:14 */) -> int32 {
+  let %a: int32 /* ty=int32 */ = %b;
+  let %c: int32 /* ty=int32 span=from_string:6:5 */ = %d;
+  %c
+}

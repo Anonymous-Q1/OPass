@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%a: int64 /* ty=int64 span=from_string:3:23 */, %b: int64 /* ty=int64 span=from_string:3:27 */, %c: int64 /* ty=int64 span=from_string:3:31 */) -> Tensor[(5), int64] {
+  sparse_to_dense(%a, %b, %c, output_shape=[5]) /* ty=Tensor[(5), int64] */
+}

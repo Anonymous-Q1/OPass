@@ -1,0 +1,51 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(4, 7), float32], %x1: Tensor[(2, 7, 2), float32], %x2: Tensor[(14, 2), float32], %x3: int32, %x4: int32, %x5: Tensor[(74, 7, 2), float32], %x6: Tensor[(16, 2), float32], %x7: Tensor[(16,), float32], %x8: Tensor[(1,), float32], %x9: Tensor[(32, 2), float32], %x10: Tensor[(32,), float32], %x11: Tensor[(1,), float32]) {
+    %0 = shape_of(%x1, dtype="int32");
+    %1 = dyn.reshape(%x0, %0, newshape=[], allowzero=0);
+    %2 = shape_of(%x0, dtype="int32");
+    %3 = dyn.reshape(%1, %2, newshape=[], allowzero=0);
+    %4 = shape_of(%1, dtype="int32");
+    %5 = dyn.reshape(%3, %4, newshape=[], allowzero=0);
+    %6 = shape_of(%3, dtype="int32");
+    %7 = dyn.reshape(%5, %6, newshape=[], allowzero=0);
+    %8 = multiply(%x1, %x1);
+    let %x12 = %8;
+    %9 = zeros_like(%x1);
+    %10 = ones_like(%x12);
+    let %x13 = %10;
+    %11 = multiply(%x13, %x1);
+    %12 = collapse_sum_like(%11, %x1);
+    %13 = add(%9, %12);
+    %14 = multiply(%x13, %x1);
+    %15 = collapse_sum_like(%14, %x1);
+    %16 = add(%13, %15);
+    %17 = (%16,);
+    %18 = (%x12, %17);
+    %19 = shape_of(%x2, dtype="int32");
+    %20 = dyn.reshape(%12, %19, newshape=[], allowzero=0);
+    %21 = shape_of(%12, dtype="int32");
+    %22 = dyn.reshape(%20, %21, newshape=[], allowzero=0);
+    %23 = one_hot(%6, %x3, %x4, depth=6, axis=0, dtype="float32");
+    %24 = add(%13, 1.0f);
+    %25 = annotation.stop_fusion(%24);
+    %26 = exp(%25);
+    %27 = multiply(%26, %26);
+    %28 = add(%11, 1.0f);
+    %29 = exp(%28);
+    %30 = squeeze(%29, axis=None);
+    %31 = (%25, %x5);
+    %32 = concatenate(%31, axis=0);
+    %33 = sqrt(%32);
+    %34 = divide(2.0f, %33);
+    %35 = nn.dense(%x2, %x6, units=None, out_dtype="");
+    %36 = add(%35, %x7);
+    %37 = multiply(%36, %x8);
+    %38 = reshape(%37, newshape=[1, 1, 224], allowzero=0);
+    %39 = nn.dense(%x2, %x9, units=None, out_dtype="");
+    %40 = add(%39, %x10);
+    %41 = multiply(%40, %x11);
+    %42 = reshape(%41, newshape=[1, 1, 448], allowzero=0);
+    %43 = (%38, %42);
+    %44 = (%7, %18, %22, %23, %27, %30, %34, %43);
+    %44
+}

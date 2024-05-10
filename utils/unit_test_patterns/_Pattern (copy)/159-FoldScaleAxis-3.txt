@@ -1,0 +1,53 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2, 11, 10, 2, 2), float32], %weight) {
+  %0 = multiply(%x, meta[relay.Constant][0]);
+  %1 = nn.leaky_relu(%0, alpha=0.1f);
+  %2 = nn.conv2d(%1, %weight, padding=[1, 1, 1, 1], channels=4, kernel_size=[3, 3], data_layout="NHWC2c", kernel_layout="HWIO1i2o");
+  add(%2, %0)
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAgAAAAIgAQACAAAAAAAAAAIAAAAAAAAAEAAAAAAAAAACUhA/yoBNP6tkCD+ihEU/"
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

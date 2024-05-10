@@ -1,0 +1,20 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 3, 224, 224), int8]"]
+	con0 [label="con0: float32"]
+	con1 [label="con1: int32"]
+	opr0 [label="{{<i0>Tensor[(1, 3, 224, 224), int8]|<i1>float32|<i2>int32}|qnn.dequantize\naxis=-1|{<o0>Tensor[(1, 3, 224, 224), float32]}}"]
+	in0 -> opr0:i0
+	con0 -> opr0:i1
+	con1 -> opr0:i2
+	opr1 [label="{{<i0>Tensor[(1, 3, 224, 224), float32]}|nn.max_pool2d\npool_size=[3, 3]\nstrides=[1, 1]\ndilation=[1, 1]\npadding=[0, 0, 0, 0]\nlayout=\"NCHW\"\nout_layout=\"\"\nceil_mode=0|{<o0>Tensor[(1, 3, 222, 222), float32]}}"]
+	opr0:o0 -> opr1:i0
+	con2 [label="con2: float32"]
+	con3 [label="con3: int32"]
+	opr2 [label="{{<i0>Tensor[(1, 3, 222, 222), float32]|<i1>float32|<i2>int32}|qnn.quantize\nout_dtype=\"int8\"\naxis=-1|{<o0>Tensor[(1, 3, 222, 222), int8]}}"]
+	opr1:o0 -> opr2:i0
+	con2 -> opr2:i1
+	con3 -> opr2:i2
+	out0 [label="out0: Tensor[(1, 3, 222, 222), int8]"]
+	opr2:o0 -> out0
+}

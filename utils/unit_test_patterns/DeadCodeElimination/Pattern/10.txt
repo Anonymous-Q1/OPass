@@ -1,0 +1,12 @@
+#[version = "0.0.5"]
+def @f() -> int {
+   let %size: int64 = cast(1024, dtype="int64");
+   let %alignment: int64 = cast(64, dtype="int64");
+   let %x = memory.alloc_storage(%size, %alignment, virtual_device=meta[VirtualDevice][0]);
+   let %_ = memory.kill(%x);
+   0
+}
+def @main() -> int {
+   let %y = @f();
+   0
+}

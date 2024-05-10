@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main() {
+  %0 = fn (%d: float32) {
+    add(%d, %d)
+  };
+  %0(4f)
+}

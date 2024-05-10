@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @aux(%x: Tensor[(), int32]) -> Tensor[(), int32] {
+    %x
+}
+def @main() -> fn(Tensor[(), int32]) -> Tensor[(), int32] {
+    @aux
+}

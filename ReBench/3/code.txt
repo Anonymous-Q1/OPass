@@ -1,0 +1,32 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 5, 5, 4), float32], %x1: Tensor[(1, 5, 5, 62), float32], %x2: Tensor[(1, 5, 5, 36), float32], %x3: Tensor[(5, 5, 4), float32], %x4: Tensor[(4, 5, 1, 1), float32]) {
+    %0 = add(%x0, 1.0f);
+    %1 = exp(%0);
+    %2 = annotation.stop_fusion(%0);
+    %3 = exp(%2);
+    %4 = (%3, %x1, %x2);
+    %5 = concatenate(%4, axis=3);
+    %6 = shape_of(%x3, dtype="int32");
+    %7 = dyn.reshape(%2, %6, newshape=[], allowzero=0);
+    %8 = shape_of(%2, dtype="int32");
+    %9 = dyn.reshape(%7, %8, newshape=[], allowzero=0);
+    %10 = shape_of(%7, dtype="int32");
+    %11 = dyn.reshape(%9, %10, newshape=[], allowzero=0);
+    %12 = shape_of(%9, dtype="int32");
+    %13 = dyn.reshape(%11, %12, newshape=[], allowzero=0);
+    %14 = nn.space_to_batch_nd(%x0, block_shape=[2, 2], paddings=[[2, 3], [2, 3]], pad_value=0.0f);
+    %15 = nn.global_max_pool2d(%14, layout="NCHW", out_layout="");
+    %16 = add(%15, %x4);
+    %17 = ndarray_size(%16, dtype="int32");
+    %18 = layout_transform(%3, src_layout="NCHW", dst_layout="NHWC");
+    %19 = layout_transform(%18, src_layout="NHWC", dst_layout="CHWN");
+    %20 = nn.relu(%19);
+    %21 = add(%20, 1.0f);
+    %22 = exp(%21);
+    %23 = squeeze(%22, axis=None);
+    let %x5 = 1;
+    %24 = add(%x5, %x5);
+    %25 = (%1, %5, %13, %17, %23, %24);
+    let %x6 = 2;
+    %25
+}

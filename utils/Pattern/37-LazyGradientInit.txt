@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(15, 15), float32]) {
+  multiply(%x, %x)
+}

@@ -1,0 +1,30 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 128, 64), int8]"]
+	con0 [label="con0: float32"]
+	con1 [label="con1: int32"]
+	opr0 [label="{{<i0>Tensor[(1, 128, 64), int8]|<i1>float32|<i2>int32}|qnn.dequantize\naxis=-1|{<o0>Tensor[(1, 128, 64), float32]}}"]
+	in0 -> opr0:i0
+	con0 -> opr0:i1
+	con1 -> opr0:i2
+	opr1 [label="{{<i0>Tensor[(1, 128, 64), float32]}|transpose\naxes=[0, 1, 2]|{<o0>Tensor[(1, 128, 64), float32]}}"]
+	opr0:o0 -> opr1:i0
+	in1 [label="in1: Tensor[(1, 256, 64), int8]"]
+	con2 [label="con2: float32"]
+	con3 [label="con3: int32"]
+	opr2 [label="{{<i0>Tensor[(1, 256, 64), int8]|<i1>float32|<i2>int32}|qnn.dequantize\naxis=-1|{<o0>Tensor[(1, 256, 64), float32]}}"]
+	in1 -> opr2:i0
+	con2 -> opr2:i1
+	con3 -> opr2:i2
+	opr3 [label="{{<i0>Tensor[(1, 128, 64), float32]|<i1>Tensor[(1, 256, 64), float32]}|nn.batch_matmul\nout_dtype=\"\"\ntranspose_a=0\ntranspose_b=1|{<o0>Tensor[(1, 128, 256), float32]}}"]
+	opr1:o0 -> opr3:i0
+	opr2:o0 -> opr3:i1
+	con4 [label="con4: float32"]
+	con5 [label="con5: int32"]
+	opr4 [label="{{<i0>Tensor[(1, 128, 256), float32]|<i1>float32|<i2>int32}|qnn.quantize\nout_dtype=\"int8\"\naxis=-1|{<o0>Tensor[(1, 128, 256), int8]}}"]
+	opr3:o0 -> opr4:i0
+	con4 -> opr4:i1
+	con5 -> opr4:i2
+	out0 [label="out0: Tensor[(1, 128, 256), int8]"]
+	opr4:o0 -> out0
+}

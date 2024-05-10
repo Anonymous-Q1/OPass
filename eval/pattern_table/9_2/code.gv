@@ -1,0 +1,19 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	con0 [label="con0: int32"]
+	con1 [label="con1: int32"]
+	con2 [label="con2: int32"]
+	con3 [label="con3: int32"]
+	opr0 [label="{{<i0>int32|<i1>int32|<i2>int32|<i3>int32}|tuple\n|{<o0>(int32, int32, int32, int32)}}"]
+	con0 -> opr0:i0
+	con1 -> opr0:i1
+	con2 -> opr0:i2
+	con3 -> opr0:i3
+	opr1 [label="{{<i0>(int32, int32, int32, int32)}|getitem\nindex=0|{<o0>int32}}"]
+	opr0:o0 -> opr1:i0
+	out0 [label="out0: int32"]
+	opr1:o0 -> out0
+	con4 [label="con4: int32"]
+	opr2 [label="{{<i0>int32}|let\n|{<o0>int32}}"]
+	con4 -> opr2:i0
+}

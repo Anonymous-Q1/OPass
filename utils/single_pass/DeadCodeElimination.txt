@@ -1,0 +1,1 @@
+[('DeadCodeElimination', {'inline_once': True, 'ignore_impurity': False})]

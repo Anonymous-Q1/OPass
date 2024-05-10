@@ -1,0 +1,13 @@
+#[version = "0.0.5"]
+def @main(%X: Tensor[(1, 10), float32], %W: Tensor[(30, 10), float32]) {
+  %0 = nn.dense(%X, %W, units=None);
+  %1 = split(%0, indices_or_sections=3, axis=1);
+  %2 = %1.0;
+  %3 = %1.1;
+  %4 = %1.2;
+  %5 = tanh(%3);
+  %6 = exp(%4);
+  %7 = sigmoid(%2);
+  %8 = multiply(%5, %6);
+  add(%7, %8)
+}

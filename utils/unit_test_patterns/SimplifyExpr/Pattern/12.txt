@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 128, 56, 56), float32]) {
+  %0 = transpose(%x, axes=[0, 1, 2, 3]);
+  %1 = nn.relu(%0);
+  layout_transform(%1, src_layout="NCHW", dst_layout="NCHW")
+}

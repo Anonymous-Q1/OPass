@@ -1,0 +1,16 @@
+#[version = "0.0.5"]
+def @main(%d: bool) {
+  let %r = ref(1);
+  let %u = fn () {
+    %0 = ref_read(%r);
+    %1 = ref_read(%r);
+    %2 = add(%0, %1);
+    ref_write(%r, %2)
+  };
+  let %eff = if (%d) {
+    %u()
+  } else {
+    %u()
+  };
+  ref_read(%r)
+}

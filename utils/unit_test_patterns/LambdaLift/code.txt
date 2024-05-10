@@ -1,0 +1,15 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2), float32]) {
+  let %while_loop = fn (%i: int32, %s: Tensor[(2), float32]) {
+    %0 = less(%i, 10);
+    if (%0) {
+      %1 = add(%i, 1);
+      %2 = add(%s, %x);
+      %while_loop(%1, %2)
+    } else {
+      %s
+    }
+  };
+  %3 = zeros(shape=[2], dtype="float32");
+  %while_loop(0, %3)
+}

@@ -1,0 +1,76 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 224, 224, 3), int8], %w: Tensor[(16, 3, 5, 5), int8], %bias: Tensor[(16), int32]) {
+  %0 = qnn.dequantize(%x, 2f, 0);
+  %1 = transpose(%0, axes=[0, 3, 1, 2]);
+  %2 = qnn.dequantize(%w, meta[relay.Constant][0], meta[relay.Constant][1], axis=0);
+  %3 = nn.conv2d(%1, %2, padding=[0, 0, 0, 0], kernel_size=[5, 5]);
+  %4 = qnn.dequantize(%bias, meta[relay.Constant][2], meta[relay.Constant][1], axis=0);
+  %5 = nn.bias_add(%3, %4);
+  qnn.quantize(%5, 1f, 0, out_dtype="int8")
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3, 6, 7]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "1", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "0", 
+        "data": "2", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAQAAAAIgAQAQAAAAAAAAAEAAAAAAAAAAutYLP4HFAD+fUQs/BKsFP2pU9T5aHwo/WTgFP1JQ+j4Zr/0+2pQLP5ZJ9z5aRQI/0l73PjQKBj8ZGfo+adsCPw==", 
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAQAAAAAgAQAQAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==", 
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAAAQAAAAIgAQAQAAAAAAAAAEAAAAAAAAAAutaLP4HFgD+fUYs/BKuFP2pUdT9aH4o/WTiFP1JQej8Zr30/2pSLP5ZJdz9aRYI/0l53PzQKhj8ZGXo/aduCPw=="
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

@@ -1,0 +1,1 @@
+[('Legalize', {'legalize_map_attr_name': 'FTVMLegalize'})]

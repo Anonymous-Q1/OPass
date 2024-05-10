@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1), float32]) {
+  let %t1 = 1f;
+  let %t2 = add(%t1, %t1);
+  let %t3 = add(%t2, %x);
+  %t3
+}

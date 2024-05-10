@@ -1,0 +1,54 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(4, 7), float32], %x1: Tensor[(2, 7, 2), float32], %x2: Tensor[(6, 7), float32], %x3: Tensor[(6,), float32], %x4: Tensor[(1,), float32], %x5: Tensor[(12, 7), float32], %x6: Tensor[(12,), float32], %x7: Tensor[(1,), float32], %x8: Tensor[(2, 17, 2), float32], %x9: Tensor[(2, 7, 2), float32], %x10: Tensor[(2, 7, 2), float32], %x11: Tensor[(7,), float32], %x12: Tensor[(7,), float32], %x13: Tensor[(7,), float32], %x14: Tensor[(2,), float32]) {
+    %0 = shape_of(%x1, dtype="int32");
+    %1 = dyn.reshape(%x0, %0, newshape=[], allowzero=0);
+    %2 = clip(%0, a_min=0.0f, a_max=255.0f);
+    %3 = cast(%2, dtype="uint8");
+    %4 = cast(%3, dtype="int32");
+    let %x15 = 1;
+    %5 = add(%x15, %x15);
+    %6 = squeeze(%x1, axis=None);
+    %7 = add(%6, 1.0f);
+    %8 = squeeze(%6, axis=None);
+    %9 = add(%8, 1.0f);
+    %10 = add(%9, 1.0f);
+    %11 = add(%6, 1.0f);
+    %12 = (%7, %10, %11);
+    %13 = concatenate(%12, axis=1);
+    %14 = squeeze(%13, axis=None);
+    %15 = add(%14, 1.0f);
+    %16 = squeeze(%14, axis=None);
+    %17 = add(%16, 1.0f);
+    %18 = squeeze(%16, axis=None);
+    %19 = add(%18, 1.0f);
+    %20 = add(%19, 1.0f);
+    %21 = add(%16, 1.0f);
+    %22 = (%17, %20, %21);
+    %23 = concatenate(%22, axis=1);
+    %24 = squeeze(%23, axis=None);
+    %25 = add(%24, 1.0f);
+    %26 = qnn.dequantize(%3, 2.0f, 114, axis=-1);
+    %27 = clip(%26, a_min=0.0f, a_max=6.0f);
+    %28 = qnn.quantize(%27, 2.0f, 114, out_dtype="uint8", axis=-1);
+    %29 = nn.dense(%x0, %x2, units=None, out_dtype="");
+    %30 = add(%29, %x3);
+    %31 = multiply(%30, %x4);
+    %32 = reshape(%31, newshape=[1, 1, 24], allowzero=0);
+    %33 = nn.dense(%x0, %x5, units=None, out_dtype="");
+    %34 = add(%33, %x6);
+    %35 = multiply(%34, %x7);
+    %36 = reshape(%35, newshape=[1, 1, 48], allowzero=0);
+    %37 = (%32, %36);
+    %38 = nn.batch_matmul(%x8, %8, out_dtype="", transpose_a=0, transpose_b=1);
+    %39 = add(%38, %x11);
+    %40 = nn.batch_matmul(%x8, %x9, out_dtype="", transpose_a=0, transpose_b=1);
+    %41 = add(%40, %x12);
+    %42 = nn.batch_matmul(%x8, %x10, out_dtype="", transpose_a=0, transpose_b=1);
+    %43 = add(%42, %x13);
+    %44 = (%39, %41, %43);
+    %45 = broadcast_to_like(%x14, %23);
+    let %x16 = 2;
+    %46 = ones_like(%x16);
+    %47 = (%1, %4, %5, %15, %25, %28, %37, %44, %45, %46);
+    %47
+}

@@ -1,0 +1,36 @@
+digraph "1_1" {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 5, 5, 4), int8]"]
+	con0 [label="con0: Tensor[(3, 3, 4, 1), int8]"]
+	con1 [label="con1: int32"]
+	con2 [label="con2: int32"]
+	con3 [label="con3: float32"]
+	con4 [label="con4: float32"]
+	opr0 [label="{{<i0>Tensor[(1, 5, 5, 4), int8]|<i1>Tensor[(3, 3, 4, 1), int8]|<i2>int32|<i3>int32|<i4>float32|<i5>float32}|qnn.conv2d\nstrides=[1, 1]\npadding=[2, 2, 2, 2]\ndilation=[2, 2]\ngroups=4\nchannels=4\nkernel_size=[3, 3]\ndata_layout=\"NHWC\"\nkernel_layout=\"HWOI\"\nout_layout=\"\"\nout_dtype=\"int32\"|{<o0>Tensor[(1, 5, 5, 4), int32]}}"]
+	in0 -> opr0:i0
+	con0 -> opr0:i1
+	con1 -> opr0:i2
+	con2 -> opr0:i3
+	con3 -> opr0:i4
+	con4 -> opr0:i5
+	opr1 [label="{{<i0>Tensor[(1, 5, 5, 4), int8]}|nn.space_to_batch_nd\nblock_shape=[2, 2]\npaddings=[[2, 3], [2, 3]]\npad_value=0.0f|{<o0>Tensor[(4, 5, 5, 4), int8]}}"]
+	in0 -> opr1:i0
+	con5 [label="con5: int32"]
+	con6 [label="con6: int32"]
+	con7 [label="con7: float32"]
+	con8 [label="con8: float32"]
+	opr2 [label="{{<i0>Tensor[(4, 5, 5, 4), int8]|<i1>Tensor[(3, 3, 4, 1), int8]|<i2>int32|<i3>int32|<i4>float32|<i5>float32}|qnn.conv2d\nstrides=[1, 1]\npadding=[0, 0, 0, 0]\ndilation=[1, 1]\ngroups=4\nchannels=4\nkernel_size=[3, 3]\ndata_layout=\"NHWC\"\nkernel_layout=\"HWOI\"\nout_layout=\"\"\nout_dtype=\"int32\"|{<o0>Tensor[(4, 3, 3, 4), int32]}}"]
+	opr1:o0 -> opr2:i0
+	con0 -> opr2:i1
+	con5 -> opr2:i2
+	con6 -> opr2:i3
+	con7 -> opr2:i4
+	con8 -> opr2:i5
+	opr3 [label="{{<i0>Tensor[(4, 3, 3, 4), int32]}|nn.batch_to_space_nd\nblock_shape=[2, 2]\ncrops=[[0, 1], [0, 1]]|{<o0>Tensor[(1, 5, 5, 4), int32]}}"]
+	opr2:o0 -> opr3:i0
+	opr4 [label="{{<i0>Tensor[(1, 5, 5, 4), int32]|<i1>Tensor[(1, 5, 5, 4), int32]}|add\n|{<o0>Tensor[(1, 5, 5, 4), int32]}}"]
+	opr0:o0 -> opr4:i0
+	opr3:o0 -> opr4:i1
+	out0 [label="out0: Tensor[(1, 5, 5, 4), int32]"]
+	opr4:o0 -> out0
+}

@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main() -> float32 {
+  %0 = fn (%d: float32 /* ty=float32 */) -> float32 {
+    add(%d, %d) /* ty=float32 */
+  } /* ty=fn (float32) -> float32 */;
+  %0(4f /* ty=float32 */) /* ty=float32 */
+}

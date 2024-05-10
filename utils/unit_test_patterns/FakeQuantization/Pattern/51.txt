@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(5, 10), int8]) {
+  %0 = qnn.dequantize(%x, 0.1f, 0);
+  %1 = nn.softmax(%0, axis=1);
+  qnn.quantize(%1, 0.00390625f, -128, out_dtype="int8")
+}

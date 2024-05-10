@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x4: Tensor[(1, 16), float32]) {
+  nn.softmax(%x4)
+}

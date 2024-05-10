@@ -1,0 +1,8 @@
+#[version = "0.0.5"]
+def @g1(%x1: Tensor[(3, 5), float32], %y1: Tensor[(3, 5), float32], Inline=1) {
+  add(%x1, %y1)
+}
+
+def @g2(%x2: Tensor[(3, 5), float32], %y2: Tensor[(3, 5), float32], Inline=1) {
+  subtract(%x2, %y2)
+}

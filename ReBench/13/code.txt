@@ -1,0 +1,53 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(10, 10), float32], %x1: Tensor[(34, 10), float32], %x2: Tensor[(38, 10), float32], %x3: Tensor[(100,), float32], %x4: Tensor[(57,), int32], %x5: Tensor[(30, 10), float32]) {
+    %0 = add(%x0, %x0);
+    %1 = multiply(%x0, %x0);
+    let %x6 = %1;
+    %2 = zeros_like(%x0);
+    %3 = ones_like(%x6);
+    let %x7 = %3;
+    %4 = multiply(%x7, %x0);
+    %5 = collapse_sum_like(%4, %x0);
+    %6 = add(%2, %5);
+    %7 = multiply(%x7, %x0);
+    %8 = collapse_sum_like(%7, %x0);
+    %9 = add(%6, %8);
+    %10 = (%9,);
+    %11 = (%x6, %10);
+    %12 = nn.dense(%1, %x1, units=None, out_dtype="");
+    %13 = expand_dims(%12, axis=2, num_newaxis=1);
+    %14 = nn.dense(%1, %x2, units=None, out_dtype="");
+    %15 = expand_dims(%14, axis=2, num_newaxis=1);
+    %16 = (%13, %15);
+    %17 = add(%13, 1.0f);
+    %18 = annotation.stop_fusion(%17);
+    %19 = exp(%18);
+    %20 = zeros(shape=[1], dtype="float32");
+    %21 = add(%8, %20);
+    %22 = add(%21, 1.0f);
+    %23 = exp(%22);
+    %24 = squeeze(%23, axis=None);
+    %25 = shape_of(%x3, dtype="int32");
+    %26 = dyn.reshape(%22, %25, newshape=[], allowzero=0);
+    %27 = shape_of(%22, dtype="int32");
+    %28 = dyn.reshape(%26, %27, newshape=[], allowzero=0);
+    %29 = shape_of(%26, dtype="int32");
+    %30 = dyn.reshape(%28, %29, newshape=[], allowzero=0);
+    %31 = shape_of(%28, dtype="int32");
+    %32 = dyn.reshape(%30, %31, newshape=[], allowzero=0);
+    let %x8 = %29;
+    %33 = nn.dense(%3, %x5, units=None, out_dtype="");
+    %34 = split(%33, indices_or_sections=3, axis=1);
+    %35 = %34.0;
+    %36 = sigmoid(%35);
+    %37 = %34.1;
+    %38 = tanh(%37);
+    %39 = %34.2;
+    %40 = exp(%39);
+    %41 = multiply(%38, %40);
+    %42 = add(%36, %41);
+    %43 = tanh(1.0f);
+    %44 = (%0, %11, %16, %19, %24, %32, %x8, %42, %43);
+    let %x9 = %x4;
+    %44
+}

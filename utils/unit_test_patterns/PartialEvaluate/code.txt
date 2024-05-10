@@ -1,0 +1,20 @@
+#[version = "0.0.5"]
+def @main(%d: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] */) -> (Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) {
+  let %x_0: fn () -> () /* ty=fn () -> () */ = fn () -> () {
+    let %x_1: () /* ty=() */ = () /* ty=() */;
+    %x_1
+  } /* ty=fn () -> () span=from_string:6:19 */;
+  let %x_2: ref(fn () -> ()) /* ty=ref(fn () -> ()) */ = ref(%x_0);
+  let %x_3: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] */ = zeros_like(%d) /* ty=Tensor[(10, 10), float32] */;
+  let %x_4: ref(Tensor[(10, 10), float32]) /* ty=ref(Tensor[(10, 10), float32]) */ = ref(%x_3);
+  let %x_5: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */ = (%d, %x_4) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */;
+  let %x_6: fn ((Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])), ref(fn () -> ())) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=fn ((Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])), ref(fn () -> ())) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */ = fn (%d1: (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) /* ty=(Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) */, %bp: ref(fn () -> ()) /* ty=ref(fn () -> ()) */) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) {
+    %d1
+  } /* ty=fn ((Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])), ref(fn () -> ())) -> (Tensor[(10, 10), float32], ref(Tensor[(10, 10), float32])) span=from_string:13:15 */;
+  let %x_7: Tensor[(10, 10), float32] /* ty=Tensor[(10, 10), float32] */ = ones_like(%d) /* ty=Tensor[(10, 10), float32] */;
+  let %x_8: () /* ty=() */ = ref_write(%x_4, %x_7);
+  let %x_9: () /* ty=() */ = () /* ty=() */;
+  let %x_10: (Tensor[(10, 10), float32],) /* ty=(Tensor[(10, 10), float32],) */ = (%x_7,) /* ty=(Tensor[(10, 10), float32],) */;
+  let %x_11: (Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) /* ty=(Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) */ = (%d, %x_10) /* ty=(Tensor[(10, 10), float32], (Tensor[(10, 10), float32],)) */;
+  %x_11
+}

@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(3, 1), float32] /* ty=Tensor[(3, 1), float32] span=from_string:4:20 */, %y: Tensor[(3, 3), float32] /* ty=Tensor[(3, 3), float32] span=from_string:3:17 */) -> Tensor[(3, 3), float32] {
+  broadcast_to(%x, shape=[3, 3]) /* ty=Tensor[(3, 3), float32] */
+}

@@ -1,0 +1,9 @@
+#[version = "0.0.5"]
+def @main(%data: Tensor[(1, 16, 7, 7), int8] /* ty=Tensor[(1, 16, 7, 7), int8] span=from_string:3:18 */, %weight: Tensor[(16, 16, 3, 3), int8] /* ty=Tensor[(16, 16, 3, 3), int8] span=from_string:3:25 */, %bias1: Tensor[(16, 1, 1), int32] /* ty=Tensor[(16, 1, 1), int32] span=from_string:5:16 */, %bias2: Tensor[(16, 1, 1), int32] /* ty=Tensor[(16, 1, 1), int32] span=from_string:6:16 */) -> Tensor[(1, 16, 7, 7), int32] {
+  %0 = nn.conv2d(%data, %weight, padding=[1, 1, 1, 1], channels=16, kernel_size=[3, 3], out_dtype="int8") /* ty=Tensor[(1, 16, 7, 7), int8] span=from_string:4:13 */;
+  %1 = cast(%0, dtype="int32") /* ty=Tensor[(1, 16, 7, 7), int32] span=from_string:6:12 */;
+  %2 = cast(%0, dtype="int32") /* ty=Tensor[(1, 16, 7, 7), int32] */;
+  %3 = add(%1, %bias1) /* ty=Tensor[(1, 16, 7, 7), int32] span=from_string:7:7 */;
+  %4 = add(%2, %bias2) /* ty=Tensor[(1, 16, 7, 7), int32] */;
+  add(%3, %4) /* ty=Tensor[(1, 16, 7, 7), int32] */
+}

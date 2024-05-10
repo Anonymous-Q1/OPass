@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(10), float32]) {
+  %0 = full(2f, shape=[10]);
+  %1 = subtract(%0, %x);
+  %2 = subtract(2f, %x);
+  add(%1, %2)
+}

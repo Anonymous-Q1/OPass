@@ -1,0 +1,11 @@
+tvm==0.8.0
+keras~=2.8
+numpy
+z3-solver
+colorama
+tqdm
+polyleven
+graphviz
+bitarray
+matplotlib
+gcovr

@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(10, 20), float32]) {
+  %0 = add(%x, 1f);
+  %1 = annotation.stop_fusion(%0);
+  exp(%1)
+}

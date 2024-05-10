@@ -1,0 +1,36 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 5, 5, 4), float32], %x1: Tensor[(0, 9, 4), float32], %x2: Tensor[(1, 5, 5, 4), float32]) {
+    %0 = nn.batch_to_space_nd(%x0, block_shape=[2, 2], crops=[[0, 1], [0, 1]]);
+    %1 = shape_of(%x1, dtype="int32");
+    %2 = dyn.reshape(%0, %1, newshape=[], allowzero=0);
+    %3 = shape_of(%0, dtype="int32");
+    %4 = dyn.reshape(%2, %3, newshape=[], allowzero=0);
+    %5 = erf(%x0);
+    %6 = nn.softmax(%5, axis=-1);
+    %7 = cast(%6, dtype="float16");
+    %8 = ones_like(%1);
+    %9 = tanh(%6);
+    %10 = subtract(%5, %x2);
+    %11 = multiply(%10, %x2);
+    %12 = layout_transform(%10, src_layout="NCHW", dst_layout="NHWC");
+    %13 = layout_transform(%12, src_layout="NHWC", dst_layout="CHWN");
+    %14 = nn.relu(%13);
+    %15 = multiply(%14, %14);
+    let %x3 = %15;
+    %16 = zeros_like(%14);
+    %17 = ones_like(%x3);
+    let %x4 = %17;
+    %18 = multiply(%x4, %14);
+    %19 = collapse_sum_like(%18, %14);
+    %20 = add(%16, %19);
+    %21 = multiply(%x4, %14);
+    %22 = collapse_sum_like(%21, %14);
+    %23 = add(%20, %22);
+    %24 = (%23,);
+    %25 = (%x3, %24);
+    let %x5 = 1;
+    %26 = add(%x5, %x5);
+    %27 = (%4, %7, %8, %9, %11, %25, %26);
+    let %x6 = 2;
+    %27
+}

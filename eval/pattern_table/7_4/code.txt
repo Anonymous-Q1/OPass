@@ -1,0 +1,9 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 4, 24, 24), uint8] /* ty=Tensor[(1, 4, 24, 24), uint8] */, %w: Tensor[(8, 4, 1, 1), uint8] /* ty=Tensor[(8, 4, 1, 1), uint8] */) -> Tensor[(1, 8, 22, 22), uint8] {
+  %0 = qnn.dequantize(%x, 0.64f /* ty=float32 */, 2 /* ty=int32 */) /* ty=Tensor[(1, 4, 24, 24), float32] */;
+  %1 = transpose(%0, axes=[0, 1, 2, 3]) /* ty=Tensor[(1, 4, 24, 24), float32] */;
+  %2 = nn.avg_pool2d(%1, pool_size=[3, 3], padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 4, 22, 22), float32] */;
+  %3 = qnn.dequantize(%w, 0.5f /* ty=float32 */, 10 /* ty=int32 */) /* ty=Tensor[(8, 4, 1, 1), float32] */;
+  %4 = nn.conv2d(%2, %3, padding=[0, 0, 0, 0], kernel_size=[1, 1]) /* ty=Tensor[(1, 8, 22, 22), float32] */;
+  qnn.quantize(%4, 1f /* ty=float32 */, 0 /* ty=int32 */, out_dtype="uint8") /* ty=Tensor[(1, 8, 22, 22), uint8] */
+}

@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(4, 8), uint8]) {
+  clip(%x, a_min=0f, a_max=255f)
+}

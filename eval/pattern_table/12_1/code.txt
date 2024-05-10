@@ -1,0 +1,13 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 4, 16, 16), float32], %w1: Tensor[(4, 4, 1, 1), float32], %scale1: Tensor[(4, 1, 1), float32]) {
+  %0 = nn.conv2d(%x, %w1, padding=[0, 0, 0, 0]);
+  %1 = multiply(%0, %scale1);
+  %2 = nn.conv2d(%x, %w1, padding=[0, 0, 0, 0]);
+  %3 = multiply(%2, %scale1);
+  %4 = nn.conv2d(%x, %w1, padding=[0, 0, 0, 0]);
+  %5 = multiply(%4, %scale1);
+  %6 = nn.relu(%1);
+  %7 = nn.relu(%3);
+  %8 = nn.relu(%5);
+  (%6, %7, %8)
+}

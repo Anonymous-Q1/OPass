@@ -1,0 +1,11 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(4, 7), float32], %y: Tensor[(2, 7, 2), float32]) {
+  %0 = shape_of(%y, dtype="int32");
+  %1 = dyn.reshape(%x, %0, newshape=[]);
+  %2 = shape_of(%x, dtype="int32");
+  %3 = dyn.reshape(%1, %2, newshape=[]);
+  %4 = shape_of(%1, dtype="int32");
+  %5 = dyn.reshape(%3, %4, newshape=[]);
+  %6 = shape_of(%3, dtype="int32");
+  dyn.reshape(%5, %6, newshape=[])
+}

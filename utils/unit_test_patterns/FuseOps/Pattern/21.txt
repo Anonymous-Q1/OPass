@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%p0107: Tensor[(?, ?, 4), float32], %p166: Tensor[(?), int64]) {
+  %0 = squeeze(%p0107, axis=[0]);
+  %1 = strided_slice(%0, begin=[0, 0], end=[15130, 2147483647], strides=[1, 1], axes=None);
+  take(%1, %p166, axis=0)
+}

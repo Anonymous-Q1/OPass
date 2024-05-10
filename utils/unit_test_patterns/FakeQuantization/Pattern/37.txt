@@ -1,0 +1,7 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 128, 128, 3), uint8]) {
+  %0 = qnn.dequantize(%x, 0.1f, 0, axis=1);
+  %1 = subtract(%0, 0.5f);
+  %2 = transpose(%1, axes=[0, 3, 1, 2]);
+  qnn.quantize(%2, 0.2f, 128, out_dtype="uint8", axis=1)
+}

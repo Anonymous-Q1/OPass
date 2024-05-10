@@ -1,0 +1,176 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(2, 2, 10, 10, 2), float32] /* ty=Tensor[(2, 2, 10, 10, 2), float32] span=from_string:3:18 */, %weight: Tensor[(2, 2, 3, 3, 2, 4), float32] /* ty=Tensor[(2, 2, 3, 3, 2, 4), float32] span=from_string:6:17 */, %in_bias: Tensor[(1, 2, 1, 1, 2), float32] /* ty=Tensor[(1, 2, 1, 1, 2), float32] span=from_string:5:16 */) -> Tensor[(2, 4, 10, 10, 2), float32] {
+  %0 = nn.relu(%x) /* ty=Tensor[(2, 2, 10, 10, 2), float32] */;
+  %1 = divide(%in_bias, meta[relay.Constant][0] /* ty=Tensor[(1, 2, 1, 1, 2), float32] */) /* ty=Tensor[(1, 2, 1, 1, 2), float32] */;
+  %2 = add(%0, %1) /* ty=Tensor[(2, 2, 10, 10, 2), float32] */;
+  %3 = multiply(%weight, meta[relay.Constant][1] /* ty=Tensor[(1, 2, 1, 1, 2, 1), float32] */) /* ty=Tensor[(2, 2, 3, 3, 2, 4), float32] */;
+  nn.conv2d(%2, %3, padding=[1, 1, 1, 1], channels=8, kernel_size=[3, 3], data_layout="NCHW2c", kernel_layout="OIHW2i4o") /* ty=Tensor[(2, 4, 10, 10, 2), float32] */
+}
+
+#[metadata]
+{
+  "root": 1, 
+  "nodes": [
+    {
+      "type_key": ""
+    }, 
+    {
+      "type_key": "Map", 
+      "keys": [
+        "relay.Constant"
+      ], 
+      "data": [2]
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [3, 13]
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "6", 
+        "data": "0", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "VirtualDevice", 
+      "attrs": {
+        "device_type_int": "-1", 
+        "memory_scope": "5", 
+        "target": "0", 
+        "virtual_device_id": "-1"
+      }
+    }, 
+    {
+      "type_key": "runtime.String"
+    }, 
+    {
+      "type_key": "relay.TensorType", 
+      "attrs": {
+        "dtype": "float32", 
+        "shape": "7", 
+        "span": "0"
+      }
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [8, 9, 10, 11, 12]
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "2"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "2"
+      }
+    }, 
+    {
+      "type_key": "relay.Constant", 
+      "attrs": {
+        "_checked_type_": "14", 
+        "data": "1", 
+        "span": "0", 
+        "virtual_device_": "4"
+      }
+    }, 
+    {
+      "type_key": "relay.TensorType", 
+      "attrs": {
+        "dtype": "float32", 
+        "shape": "15", 
+        "span": "0"
+      }
+    }, 
+    {
+      "type_key": "Array", 
+      "data": [16, 17, 18, 19, 20, 21]
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "2"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "2"
+      }
+    }, 
+    {
+      "type_key": "IntImm", 
+      "attrs": {
+        "dtype": "int32", 
+        "span": "0", 
+        "value": "1"
+      }
+    }
+  ], 
+  "b64ndarrays": [
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAABQAAAAIgAQABAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAIAAAAAAAAAEAAAAAAAAACi50s/+AoTP5NHFD8IkVk/", 
+    "P6G0lvBAXt0AAAAAAAAAAAEAAAAAAAAABgAAAAIgAQABAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAIAAAAAAAAAAQAAAAAAAAAQAAAAAAAAAKLnSz/4ChM/k0cUPwiRWT8="
+  ], 
+  "attrs": {"tvm_version": "0.13.dev0"}
+}

@@ -1,0 +1,5 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 56, 56, 64), int8], %weight: Tensor[(3, 3, 64, 64), int8]) {
+  %0 = nn.pad(%x, 10, pad_width=[[0, 0], [1, 1], [1, 1], [0, 0]]);
+  qnn.conv2d(%0, %weight, 10, 1, 1f, 1f, padding=[0, 0, 0, 0], channels=64, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWIO", out_dtype="int32")
+}

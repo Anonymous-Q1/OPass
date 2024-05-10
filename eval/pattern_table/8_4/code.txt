@@ -1,0 +1,20 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 4, 24, 24), uint8] /* ty=Tensor[(1, 4, 24, 24), uint8] */, %w: Tensor[(8, 4, 1, 1), uint8] /* ty=Tensor[(8, 4, 1, 1), uint8] */) -> Tensor[(1, 8, 22, 22), uint8] {
+  %1 = fn (%p02: Tensor[(1, 4, 24, 24), uint8] /* ty=Tensor[(1, 4, 24, 24), uint8] */, Primitive=1) -> Tensor[(1, 4, 24, 24), float32] {
+    qnn.dequantize(%p02, 0.64f /* ty=float32 */, 2 /* ty=int32 */) /* ty=Tensor[(1, 4, 24, 24), float32] */
+  } /* ty=fn (Tensor[(1, 4, 24, 24), uint8]) -> Tensor[(1, 4, 24, 24), float32] */;
+  %2 = %1(%x) /* ty=Tensor[(1, 4, 24, 24), float32] */;
+  %3 = fn (%p01: Tensor[(1, 4, 24, 24), float32] /* ty=Tensor[(1, 4, 24, 24), float32] */, Primitive=1) -> Tensor[(1, 4, 22, 22), float32] {
+    nn.avg_pool2d(%p01, pool_size=[3, 3], padding=[0, 0, 0, 0]) /* ty=Tensor[(1, 4, 22, 22), float32] */
+  } /* ty=fn (Tensor[(1, 4, 24, 24), float32]) -> Tensor[(1, 4, 22, 22), float32] */;
+  %4 = fn (%p03: Tensor[(8, 4, 1, 1), uint8] /* ty=Tensor[(8, 4, 1, 1), uint8] */, Primitive=1) -> Tensor[(8, 4, 1, 1), float32] {
+    qnn.dequantize(%p03, 0.5f /* ty=float32 */, 10 /* ty=int32 */) /* ty=Tensor[(8, 4, 1, 1), float32] */
+  } /* ty=fn (Tensor[(8, 4, 1, 1), uint8]) -> Tensor[(8, 4, 1, 1), float32] */;
+  %5 = %3(%2) /* ty=Tensor[(1, 4, 22, 22), float32] */;
+  %6 = %4(%w) /* ty=Tensor[(8, 4, 1, 1), float32] */;
+  %7 = fn (%p0: Tensor[(1, 4, 22, 22), float32] /* ty=Tensor[(1, 4, 22, 22), float32] */, %p1: Tensor[(8, 4, 1, 1), float32] /* ty=Tensor[(8, 4, 1, 1), float32] */, Primitive=1) -> Tensor[(1, 8, 22, 22), uint8] {
+    %0 = nn.conv2d(%p0, %p1, padding=[0, 0, 0, 0], kernel_size=[1, 1]) /* ty=Tensor[(1, 8, 22, 22), float32] */;
+    qnn.quantize(%0, 1f /* ty=float32 */, 0 /* ty=int32 */, out_dtype="uint8") /* ty=Tensor[(1, 8, 22, 22), uint8] */
+  } /* ty=fn (Tensor[(1, 4, 22, 22), float32], Tensor[(8, 4, 1, 1), float32]) -> Tensor[(1, 8, 22, 22), uint8] */;
+  %7(%5, %6) /* ty=Tensor[(1, 8, 22, 22), uint8] */
+}

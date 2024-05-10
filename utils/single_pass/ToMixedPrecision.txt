@@ -1,0 +1,1 @@
+[('ToMixedPrecision', {'mixed_precision_type': 'float16', 'missing_op_mode': 2})]

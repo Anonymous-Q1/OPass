@@ -1,0 +1,43 @@
+#[version = "0.0.5"]
+def @main(%x0: Tensor[(1, 128, 56, 56), float32], %x1: Tensor[(1, 128, 56, 56), float32], %x2: Tensor[(128, 128, 3, 3), float32], %x3: Tensor[(128, 128, 1, 1), float32], %x4: Tensor[(128, 128, 3, 3), float32], %x5: Tensor[(128, 56, 56), float32], %x6: float32, %x7: Tensor[(80, 128, 56, 56), float32]) {
+    %0 = layout_transform(%x0, src_layout="NCHW", dst_layout="NCHW4c");
+    %1 = layout_transform(%0, src_layout="NCHW4c", dst_layout="NCHW");
+    %2 = nn.relu(%1);
+    %3 = subtract(%2, %x1);
+    %4 = multiply(%3, %x1);
+    %5 = layout_transform(%0, src_layout="NCHW4c", dst_layout="NCHW8c");
+    %6 = layout_transform(%5, src_layout="NCHW8c", dst_layout="NCHW4c");
+    %7 = nn.relu(%6);
+    %8 = add(%2, 1.0f);
+    %9 = nn.conv2d(%8, %x2, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=128, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %10 = add(1.0f, %9);
+    %11 = add(%9, %10);
+    %12 = nn.conv2d(%11, %x4, strides=[1, 1], padding=[1, 1, 1, 1], dilation=[1, 1], groups=1, channels=128, kernel_size=[3, 3], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %13 = nn.batch_to_space_nd(%12, block_shape=[2, 2], crops=[[0, 1], [0, 1]]);
+    %14 = shape_of(%x5, dtype="int32");
+    %15 = dyn.reshape(%8, %14, newshape=[], allowzero=0);
+    %16 = shape_of(%8, dtype="int32");
+    %17 = dyn.reshape(%15, %16, newshape=[], allowzero=0);
+    %18 = shape_of(%15, dtype="int32");
+    %19 = dyn.reshape(%17, %18, newshape=[], allowzero=0);
+    %20 = shape_of(%17, dtype="int32");
+    %21 = dyn.reshape(%19, %20, newshape=[], allowzero=0);
+    %22 = full_like(%18, %x6);
+    %23 = zeros_like(%16);
+    %24 = nn.conv2d(%11, %x3, strides=[1, 1], padding=[0, 0, 0, 0], dilation=[1, 1], groups=1, channels=128, kernel_size=[1, 1], data_layout="NCHW", kernel_layout="OIHW", out_layout="", out_dtype="");
+    %25 = add(%24, %12);
+    %26 = (%25, %x7);
+    %27 = concatenate(%26, axis=0);
+    %28 = squeeze(%x3, axis=None);
+    %29 = add(%28, 1.0f);
+    %30 = squeeze(%28, axis=None);
+    %31 = add(%30, 1.0f);
+    %32 = add(%31, 1.0f);
+    %33 = add(%28, 1.0f);
+    %34 = (%29, %32, %33);
+    %35 = concatenate(%34, axis=1);
+    %36 = squeeze(%35, axis=None);
+    %37 = add(%36, 1.0f);
+    %38 = (%4, %7, %13, %21, %22, %23, %27, %37);
+    %38
+}

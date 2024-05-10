@@ -1,0 +1,6 @@
+#[version = "0.0.5"]
+def @main(%X: Tensor[(1, 30), float32], %W: Tensor[(10, 10), float32]) {
+  %0 = split(%X, indices_or_sections=3, axis=1);
+  %1 = %0.0;
+  nn.dense(%1, %W, units=None)
+}

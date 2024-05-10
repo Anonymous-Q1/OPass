@@ -1,0 +1,11 @@
+#[version = "0.0.5"]
+def @main(%x: Tensor[(1, 5, 5, 4), float32] /* ty=Tensor[(1, 5, 5, 4), float32] */) -> Tensor[(1, 5, 5, 4), float32] {
+  %0 = transpose(%x, axes=[0, 1, 2, 3]) /* ty=Tensor[(1, 5, 5, 4), float32] */;
+  %1 = ones(shape=[3, 3, 4, 1], dtype="float32") /* ty=Tensor[(3, 3, 4, 1), float32] */;
+  %2 = nn.conv2d(%0, %1, padding=[2, 2, 2, 2], dilation=[2, 2], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI") /* ty=Tensor[(1, 5, 5, 4), float32] */;
+  %3 = nn.space_to_batch_nd(%x, block_shape=[2, 2], paddings=[[2, 3], [2, 3]]) /* ty=Tensor[(4, 5, 5, 4), float32] */;
+  %4 = nn.conv2d(%3, %1, padding=[0, 0, 0, 0], groups=4, channels=4, kernel_size=[3, 3], data_layout="NHWC", kernel_layout="HWOI") /* ty=Tensor[(4, 3, 3, 4), float32] */;
+  %5 = layout_transform(%2, src_layout="NCHW", dst_layout="NCHW") /* ty=Tensor[(1, 5, 5, 4), float32] */;
+  %6 = nn.batch_to_space_nd(%4, block_shape=[2, 2], crops=[[0, 1], [0, 1]]) /* ty=Tensor[(1, 5, 5, 4), float32] */;
+  add(%5, %6) /* ty=Tensor[(1, 5, 5, 4), float32] */
+}

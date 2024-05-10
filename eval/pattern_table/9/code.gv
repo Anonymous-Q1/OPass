@@ -1,0 +1,15 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	con0 [label="con0: int32"]
+	opr0 [label="{{<i0>int32}|let\n|{<o0>int32}}"]
+	con0 -> opr0:i0
+	opr1 [label="{{<i0>int32|<i1>int32}|add\n|{<o0>int32}}"]
+	opr0:o0 -> opr1:i0
+	opr0:o0 -> opr1:i1
+	out0 [label="out0: int32"]
+	opr1:o0 -> out0
+	con1 [label="con1: int32"]
+	opr2 [label="{{<i0>int32}|let\n|{<o0>int32}}"]
+	con1 -> opr2:i0
+	in0 [label="in0: int32"]
+}

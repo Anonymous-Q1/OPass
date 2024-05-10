@@ -1,0 +1,4 @@
+#[version = "0.0.5"]
+def @main(%data: Tensor[(2, 3, 4), float32], %shape_like: Tensor[(6, 2, 2), float32]) {
+  reshape_like(%data, %shape_like, lhs_begin=2, rhs_begin=1)
+}

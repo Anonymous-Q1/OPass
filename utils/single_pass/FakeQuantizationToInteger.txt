@@ -1,0 +1,1 @@
+[('FakeQuantizationToInteger', {'hard_fail': True, 'use_qat': True})]

@@ -1,0 +1,21 @@
+#[version = "0.0.5"]
+def @g1(%x1: Tensor[(2, 2), float32], Inline=1, Compiler="a") {
+  %x1
+}
+
+def @main(%x: Tensor[(2, 2), float32], %y: Tensor[(2, 2), float32]) {
+  %0 = add(%x, %y);
+  %1 = @g1(%x);
+  add(%0, %1)
+}
+
+def @sum_up(%i: int32, Inline=1) -> int32 {
+  %2 = equal(%i, 0);
+  if (%2) {
+    %i
+  } else {
+    %3 = subtract(%i, 1);
+    %4 = @sum_up(%3);
+    add(%4, %i)
+  }
+}

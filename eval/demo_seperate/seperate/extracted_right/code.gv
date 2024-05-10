@@ -1,0 +1,14 @@
+digraph code {
+	node [fontname="Linux Biolinum O" shape=record]
+	in0 [label="in0: Tensor[(1, 5, 5, 4), float32]"]
+	opr0 [label="{{<i0>Tensor[(1, 5, 5, 4), float32]}|nn.space_to_batch_nd\nblock_shape=[2, 2]\npaddings=[[2, 3], [2, 3]]\npad_value=0.0f|{<o0>Tensor[(4, 5, 5, 4), float32]}}"]
+	in0 -> opr0:i0
+	in1 [label="in1: Tensor[(3, 3, 4, 1), float32]"]
+	opr1 [label="{{<i0>Tensor[(4, 5, 5, 4), float32]|<i1>Tensor[(3, 3, 4, 1), float32]}|nn.conv2d\nstrides=[1, 1]\npadding=[0, 0, 0, 0]\ndilation=[1, 1]\ngroups=4\nchannels=4\nkernel_size=[3, 3]\ndata_layout=\"NHWC\"\nkernel_layout=\"HWOI\"\nout_layout=\"\"\nout_dtype=\"\"|{<o0>Tensor[(4, 3, 3, 4), float32]}}"]
+	opr0:o0 -> opr1:i0
+	in1 -> opr1:i1
+	opr2 [label="{{<i0>Tensor[(4, 3, 3, 4), float32]}|nn.batch_to_space_nd\nblock_shape=[2, 2]\ncrops=[[0, 1], [0, 1]]|{<o0>Tensor[(1, 5, 5, 4), float32]}}"]
+	opr1:o0 -> opr2:i0
+	out0 [label="out0: Tensor[(1, 5, 5, 4), float32]"]
+	opr2:o0 -> out0
+}
